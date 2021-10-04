@@ -1,7 +1,7 @@
 var artist = '';
 var title = '';
 
-function getApi() {
+function lyricsApi() {
     var lyricsUrl = `https://api.lyrics.ovh/v1/${artist}/${title}`;
     fetch(lyricsUrl)
       .then(function (response) {
@@ -11,4 +11,4 @@ function getApi() {
           console.log(data);
       });
   }
-  getApi();
+  lyricsApi();
