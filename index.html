@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <!-- materialize -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!-- Bulma -->
-    
+      <link href="https://fonts.googleapis.com/css2?family=Corben:wght@700&family=Libre+Franklin:wght@100&family=Merriweather+Sans:wght@300&display=swap" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -25,15 +24,10 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
-  
 
     <link rel="stylesheet" href="./assets/style.css" />
-    <title>-----</title>
-  </head>
-<style>{
-html
-  scroll-behavior: smooth;
-}</style>
+    <title>FanJAm!</title>
+
   <body>
     <header> 
       <nav>
@@ -41,77 +35,109 @@ html
           <div class="col s1">
           </div>
           <div class="col s10">
+
             <div class="card align center">
               <div class="card-content white-text">
-                <h1 class="card-title" id="title">Fan Jam</h1>
-                <p id="nav-text">Welcome to Fan Jam where you can prepare for your upcoming concert by searching for the artist and song title to get the latest information.
+                <span class="card-title" id="titleTxt" >Fan Jam</span>
+                <p id="aboutTxt">Welcome to Fan Jam where you can prepare for your upcoming concert by searching for the artist and song title to get the latest information.
                   You'll be able to sing along with song lyrics and links to your favorite bands!
                 </p>
               </div>
                 <form class="col s12">
                   <div class="row">
                     <div class="input-field col s6">
-                      <input id="icon_telephone" type="text" class="validate">
-                      <label for="icon_telephone">Artist</label>
+
+                      <input id="icon_prefix" type="tel" class="validate">
+
+                      <label for="icon_prefix">Artist</label>
                     </div>
                     <div class="input-field col s6">
-                      <input id="icon_telephone" type="tel" class="validate">
+                      <input id="icon_telephone" type="tel" class="validate titleInput">
+
                       <label for="icon_telephone">Song Title</label>
                     </div>
                   </div>
                 </form>
-                <button class="color black pulse btn-large"><i class="material-icons left">music_note</i>Rock on!</button>
+                <button class="color black pulse btn-large"><a href="#resultsArea"> </a><i class="material-icons left">music_note</i>Rock on!</button>
               </div>
             </div>
           </div>
           <div class="col s1">
           </div>
       </nav>
-
-      <content>
-        <div class="row">
-          <div class="col s12 m7">
-            <div class="card">
-              <div class="card-image">
-                <img src="images/sample-1.jpg">
-                <span class="card-title">Card Title</span>
-              </div>
-              <div class="card-content">
-                <p>I am a very simple card. I am good at containing small bits of information.
-                I am convenient because I require little markup to use effectively.</p>
-              </div>
-              <div class="card-action">
-                <a href="#">This is a link</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s12 m7">
-            <div class="card">
-              <div class="card-image">
-                <img src="images/sample-1.jpg">
-                <span class="card-title">Card Title</span>
-              </div>
-              <div class="card-content lyrics">
-                <p>I am a very simple card. I am good at containing small bits of information.
-                I am convenient because I require little markup to use effectively.</p>
-              </div>
-              <div class="card-action">
-                <a href="#">This is a link</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </content>
-
     </header>
+  
+
+
+    <section class="results-col center-align">
+   
+      <div class="row" id="resultsArea">
+        <div class="col s6"> 
+          <div class="row">
+          <div class="col s12 m12">
+            <div class="card">
+              <div class="card-image ">
+                <img src="https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?cs=srgb&dl=pexels-wendy-wei-1190297.jpg&fm=jpg">
+                <span class="card-title">Card Title</span>
+                <!-- <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a> -->
+              </div>
+              <p id="artistName">Artist Name</p>
+              <div class="card-content">
+                <p id="lyrics">I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+                  </div>
+        <div class="col s6">
+          <div class="row">
+            <div class="col s12 m12">
+              <div class="card">
+                <div class="card-image">
+                    <div class="row web-links">
+          
+                  <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large twitterBtn infoBtn"><i class="material-icons left">cloud</i>Twitter</button>
+                  
+
+                    <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large youtubeBtn infoBtn"><i class="material-icons right">cloud</i>YouTube</button>
+
+
+                      <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large facebookBtn infoBtn"><i class="material-icons right">cloud</i>FaceBook</button>
+
+
+                    <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large webpageBtn infoBtn"><i class="material-icons right">cloud</i>Webpage</button>
+                     </div>
+
+                  <!-- <img src="https://images.pexels.com/photos/164879/pexels-photo-164879.jpeg?cs=srgb&dl=pexels-pixabay-164879.jpg&fm=jpg"> -->
+                  <!-- <span class="card-title">Card Title</span> -->
+                  <!-- <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a> -->
+                </div>
+                <p id="artistName">Artist Name</p>
+
+                <button class="waves-effect waves-light btn-large concertBtn"><i class="material-icons left">cloud</i>Concerts</button>
+                <div class="card-content">
+                  <p id="artistInfo">I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                  <br><br>
+                  <p id="artistInfo">From ticket master API</p>
+                  <br><br>
+                  <p id="artistInfo">info about the events</p>
+                  <br><br>
+                  <p id="artistInfo">This might be a url or more info!. Who knows.</p>
 
 
 
+                </div>
+              </div>
+            </div>
+          </div>
+                    
+        </div>
+      </div>
 
+    </section>
+    
 
-    <!-- Compiled and minified JavaScript -->
+  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
