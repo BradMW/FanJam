@@ -1,62 +1,53 @@
-var artist = "";
-var title = "";
+var artist = '';
+var title = '';
 var searchHistory = [];
-var search = $("#search");
-var body = $("#container");
 
-$('#formContainer').on("click", '#rockOnBtn', function(event) { 
-  event.preventDefault();
-  // take input value to create city's name variable to pass to 5 day forecast function
-  artist = $(".inputArea1").val();
-  title = $(".inputArea2").val();
-  console.log(artist);
-  console.log(title);
-  // need to add city name to buttons
-  var searchedSong = $(
-    "<button class='btn btn-primary' type='button'>Search</button>"
-  );
-  searchedSong.click(function (event) {
+
+$('#formContainer').on("click", '#rockOnBtn', function(event) {
     event.preventDefault();
-  });
+    
+    // take input value 
+    artist = $(".artistInput").val();
+    title = $(".titleInput").val();
 
-  // remove display none was search is completed?
+    searchHistory.push(title);
 
-  searchHistory.push(title);
-  // console.log(title);
-  // convert object to JSON string
-  const jsonCityArr = JSON.stringify(searchHistory);
-  // save to local storage
-  localStorage.setItem("title", jsonCityArr);
-  searchedSong.text(title);
-  lyricsApi(artist, title);
-  // attractions(artist);
+    // convert object to JSON string
+    const jsonSongArr = JSON.stringify(searchHistory);
+
+    // save to local storage
+    localStorage.setItem("title", jsonSongArr);
+    
+    lyricsApi();
+    attractions(artist);
 });
 
+
 function lyricsApi() {
+  console.log("Starting lyrics functions.");
   var lyricsUrl = `https://api.lyrics.ovh/v1/${artist}/${title}`;
-  // console.log(artist);
-  // console.log(title);
-  fetch(lyricsUrl)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(data.lyrics);
+    
+    fetch(lyricsUrl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+          console.log(data);
+          //append lyrics to maybe p tags in the first column
+          // var lyricsContainer = $("<div class='lyrics'></div>");
 
-      //append lyrics to maybe p tags in the first column
-      // creates a main container to hold the song artist and title
-      var artistName = $("#artistName").text(artist.toUpperCase());
-      // // a wrapper for the song title being searched
-      var songTitle = $("#songLyrics").text(data.lyrics);
+          var artistName = $("#artistName").text(artist.toUpperCase());
+          // // a wrapper for the song title being searched
+          var songTitle = $("#songLyrics").text(data.lyrics);
 
-      //appending elements to the containers
-      // body.append(lyricsContainer);
-      // lyricsContainer.append(artistName);
-      // lyricsContainer.append(songTitle);
-
-      getHistory()
-    });
-}
+          //appending elements to the containers
+          body.append(lyricsContainer);
+          lyricsContainer.append(artistName);
+          lyricsContainer.append(songTitle);
+          getHistory();
+      });
+      console.log("Ending lyrics functions.");
+  }
 
 function getHistory(){
     console.log("Starting getHistory");
@@ -68,13 +59,14 @@ function getHistory(){
         searchHistory = JSON.parse(localStorage.getItem("title"));
         console.log(searchHistory);
 
-        // for loop to create buttons of history of city searches
+        
+        // for loop to create buttons of history of songs searches
         for (var i = 0; i < searchHistory.length; i++) {
             var newBtns = $("<button class='btn btn-primary' type='button'>Search</button>")
             console.log(newBtns);
             newBtns.text(searchHistory[i]);
             searchHistoryDiv.append(newBtns);
-
+           
             newBtns.click(function(event) {
                 event.preventDefault();
                 var searchedTitle = $(event.target);
@@ -86,6 +78,10 @@ function getHistory(){
         }
     }
     console.log('Ending getHistory');
+}
+
+function matchArtist(artist){
+
 }
 
 function attractions() {
@@ -107,9 +103,11 @@ function attractions() {
             events(artist);
             // else{
                 // append the "this artist has no upcoming events" to html}
-
-        })
-  }
+        
+        // })
+  })
+  console.log('Ending attractions');
+}
 
 function events(artist) {
     console.log('Starting events');
@@ -117,21 +115,30 @@ function events(artist) {
     fetch(eventsURL)
       .then(function (response) {
         return response.json();
-    })
-    .then (function(data) {
-        console.log(data);
-        console.log(data.attractions.name);
-        if (data.events.name.toUpperCase() === artist.toUpperCase) {
-            for (var i=0; i < data.events.length; i++) {
-                var concertURL = data.events[i].url;
-                var concertLink = $("<a class='button'> </a>");
-                concertLink.attr("href", concertURL);
-                // cardDiv.append(concertLink);
+      })
+      .then (function(data) {
+          console.log(data);
+          console.log(data._embedded.events[0].name);
+          //var concertsDiv = //div
+          //concertsDiv.html("");
+          for (var i=0; i < data._embedded.events.length; i++) {
+              if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase()) {
+                  var concertURL = data._embedded.events[i].url;
+                  //console.log(concertURL);
+                  var concertBtns = $("<button class='btn btn-primary' id='concert' type='button'></button>")
+                  var concertLink = $("<a class=concertLink></a>");
+                  concertLink.attr("href", concertURL);
+                  // concertLink.text(artist + [i]);
+                  //console.log(concertLink);
+                  $("#concerts").append(concertBtns);
+                  concertBtns.append(concertLink);
+                    //just to test in temp div
+              }       
+            //else {
+                // append the "this artist has no upcoming events" to html}
             }
-    //     //else {
-    //         // append the "this artist has no upcoming events" to html}
-        }
-    })
+      })
+      console.log('Ending Event');
 }
 
 // function for "search new artist" button at the bottom of both columns that scrolls user back to the top of the page
