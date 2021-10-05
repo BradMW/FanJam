@@ -12,10 +12,10 @@ search.on("click", function(event) {
     console.log(artist);
 
     // need to add city name to buttons
-    var searchedSong = $("<button class='btn btn-primary' type='button'>Search</button>");
-    searchedSong.click(function(event){
-            event.preventDefault();
-    })
+    // var searchedSong = $("<button class='btn btn-primary' type='button'>Search</button>");
+    // searchedSong.click(function(event){
+    //         event.preventDefault();
+    // })
 
     // remove display none was search is completed?
 
@@ -25,7 +25,7 @@ search.on("click", function(event) {
     const jsonCityArr = JSON.stringify(searchHistory);
     // save to local storage
     localStorage.setItem("title", jsonCityArr);
-    searchedSong.text(title);
+    // searchedSong.text(title);
     lyricsApi(artist, title);
     attractions(artist);
 });
@@ -46,6 +46,7 @@ function lyricsApi() {
   }
 
 function getHistory(){
+    console.log("testing1");
     var searchHistoryDiv = $("#historyBtns");
     searchHistoryDiv.html("");
 
@@ -106,13 +107,21 @@ function attractions() {
     })
     .then (function(data) {
         console.log(data);
-        console.log(data.attractions.name);
-        if (data.events.name.toUpperCase() === artist.toUpperCase) {
-            for (var i=0; i < data.events.length; i++) {
-                var concertURL = data.events[i].url;
-                var concertLink = $("<button><a class='button'></a></button>");
+        console.log(data._embedded.events[0].name);
+        var concertsDiv = //div
+        concertsDiv.html("");
+        for (var i=0; i < data._embedded.events.length; i++) {
+            if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase()) {
+                var concertURL = data._embedded.events[i].url;
+                console.log(concertURL);
+                var concertBtns = $("<button class='btn btn-primary' id='concert' type='button'></button>")
+                var concertLink = $("<a class=concertLink></a>");
                 concertLink.attr("href", concertURL);
-                cardDiv.append(concertLink);
+                // concertLink.text(artist + [i]);
+                console.log(concertLink);
+                $("#concerts").append(concertBtns);
+                concertBtns.append(concertLink);
+                 //just to test in temp div
             }       
     //     //else {
     //         // append the "this artist has no upcoming events" to html}
