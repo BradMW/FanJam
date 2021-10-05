@@ -5,48 +5,42 @@ var searchHistory = [];
 
 $('#formContainer').on("click", '#rockOnBtn', function(event) {
     event.preventDefault();
-    console.log('Rock On! Clicked');
+    
     // take input value 
     artist = $(".artistInput").val();
     title = $(".titleInput").val();
-    console.log(artist);
-
-    // need to add city name to buttons
-    // var searchedSong = $("<button class='btn btn-primary' type='button'>Search</button>");
-    // searchedSong.click(function(event){
-    //         event.preventDefault();
-    // })
-
-    // remove display none was search is completed?
 
     searchHistory.push(title);
-    console.log(title);
+
     // convert object to JSON string
     const jsonSongArr = JSON.stringify(searchHistory);
+
     // save to local storage
     localStorage.setItem("title", jsonSongArr);
-    searchedSong.text(title);
-    lyricsApi(artist, title);
-    //attractions(artist);
+    
+    lyricsApi();
+    attractions(artist);
 });
 
 
 function lyricsApi() {
-    var lyricsUrl = `https://api.lyrics.ovh/v1/${artist}/${title}`;
-    console.log(lyricsUrl);
+  console.log("Starting lyrics functions.");
+  var lyricsUrl = `https://api.lyrics.ovh/v1/${artist}/${title}`;
+    
     fetch(lyricsUrl)
       .then(function (response) {
         return response.json();
       })
       .then(function (data) {
           console.log(data);
-        //   append lyrics to maybe p tags in the first column
+          //append lyrics to maybe p tags in the first column
           getHistory();
       });
+      console.log("Ending lyrics functions.");
   }
 
 function getHistory(){
-    console.log("testing1");
+    console.log("Starting getHistory");
     var searchHistoryDiv = $("#historyBtns");
     searchHistoryDiv.html("");
 
@@ -73,60 +67,68 @@ function getHistory(){
             })
         }
     }
+    console.log('Ending getHistory');
 }
 
+function matchArtist(artist){
+
+}
 
 function attractions() {
-    var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
+  console.log('Starting attractions');  
+  var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
     fetch(attractionsURL)
         .then(function (response) {
             return response.json();
         })
         .then (function(data) {
             console.log(data);
-
+            matchArtist(data._embedded.attractions);
         // capitalize all letters from input
         // if (data.attractions[].name.toUpperCase() === artist.toUpperCase && data.attractions.upcomingEvents._total > 0) {
             // make all the variables for the buttons(if statement for if the artist has a link to their fb, youtube, etc)
             // prepend photo to lyrics side of columns
             // append social media buttons
             // call events function
-            events(artist)
+            events(artist);
             // else{
                 // append the "this artist has no upcoming events" to html}
         
         // })
   })
+  console.log('Ending attractions');
 }
 
-  function events(artist) {
-      var eventsURL = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`
-      fetch(eventsURL)
+function events(artist) {
+    console.log('Starting events');
+    var eventsURL = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`
+    fetch(eventsURL)
       .then(function (response) {
         return response.json();
-    })
-    .then (function(data) {
-        console.log(data);
-        console.log(data._embedded.events[0].name);
-        var concertsDiv = //div
-        concertsDiv.html("");
-        for (var i=0; i < data._embedded.events.length; i++) {
-            if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase()) {
-                var concertURL = data._embedded.events[i].url;
-                console.log(concertURL);
-                var concertBtns = $("<button class='btn btn-primary' id='concert' type='button'></button>")
-                var concertLink = $("<a class=concertLink></a>");
-                concertLink.attr("href", concertURL);
-                // concertLink.text(artist + [i]);
-                console.log(concertLink);
-                $("#concerts").append(concertBtns);
-                concertBtns.append(concertLink);
-                 //just to test in temp div
-            }       
-    //     //else {
-    //         // append the "this artist has no upcoming events" to html}
-        }
-    })
+      })
+      .then (function(data) {
+          console.log(data);
+          console.log(data._embedded.events[0].name);
+          //var concertsDiv = //div
+          //concertsDiv.html("");
+          for (var i=0; i < data._embedded.events.length; i++) {
+              if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase()) {
+                  var concertURL = data._embedded.events[i].url;
+                  //console.log(concertURL);
+                  var concertBtns = $("<button class='btn btn-primary' id='concert' type='button'></button>")
+                  var concertLink = $("<a class=concertLink></a>");
+                  concertLink.attr("href", concertURL);
+                  // concertLink.text(artist + [i]);
+                  //console.log(concertLink);
+                  $("#concerts").append(concertBtns);
+                  concertBtns.append(concertLink);
+                    //just to test in temp div
+              }       
+            //else {
+                // append the "this artist has no upcoming events" to html}
+            }
+      })
+      console.log('Ending Event');
 }
 
 // function for "search new artist" button at the bottom of both columns that scrolls user back to the top of the page
