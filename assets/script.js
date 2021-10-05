@@ -109,37 +109,42 @@ function attractions() {
   console.log('Ending attractions');
 }
 
-function events(artist) {
-    console.log('Starting events');
-    var eventsURL = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`
-    fetch(eventsURL)
+
+  function events(artist) {
+      var eventsURL = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${artist}&apikey=2auLbJzQE7PGFSioWJ1GEiuTpEw12S1r`
+      fetch(eventsURL)
       .then(function (response) {
         return response.json();
-      })
-      .then (function(data) {
-          console.log(data);
-          console.log(data._embedded.events[0].name);
-          //var concertsDiv = //div
-          //concertsDiv.html("");
-          for (var i=0; i < data._embedded.events.length; i++) {
-              if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase()) {
-                  var concertURL = data._embedded.events[i].url;
-                  //console.log(concertURL);
-                  var concertBtns = $("<button class='btn btn-primary' id='concert' type='button'></button>")
-                  var concertLink = $("<a class=concertLink></a>");
-                  concertLink.attr("href", concertURL);
-                  // concertLink.text(artist + [i]);
-                  //console.log(concertLink);
-                  $("#concerts").append(concertBtns);
-                  concertBtns.append(concertLink);
-                    //just to test in temp div
-              }       
-            //else {
-                // append the "this artist has no upcoming events" to html}
+    })
+    .then (function(data) {
+        console.log(data);
+        console.log(data._embedded.events[0].name);
+        console.log(data._embedded.events[0]._embedded.venues[0].city.name);
+        var concertsDiv = $("#concertBtns"); //div
+        var artistName = data._embedded.events[0].name
+        concertsDiv.html("");
+        for (var i=0; i < data._embedded.events.length; i++) {
+            if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase()) {
+                var concertURL = data._embedded.events[i].url;
+                var concertCity = data._embedded.events[i]._embedded.venues[0].city.name
+                console.log(concertURL);
+                var concertBtns = $("<button class='btn btn-primary' type='button'></button>")
+                var concertLink = $("<a class=concertLink id='concerts'></a>");
+                concertLink.attr("href", concertURL);
+                concertLink.text(artistName + " in " + concertCity);
+                console.log(concertLink);
+                concertsDiv.append(concertBtns);
+                concertBtns.append(concertLink);
+                 //just to test in temp div
+            }else {
+            concertsDiv.append($("<p>This artist has no upcoming events</p>"));
             }
-      })
-      console.log('Ending Event');
-}
+        }
+    })
+  }
+  
+
+
 
 // function for "search new artist" button at the bottom of both columns that scrolls user back to the top of the page
 // clear html inner.HTML("")

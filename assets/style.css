@@ -61,6 +61,11 @@ input {
     color: white
 }
 
+
+#concerts {
+    text-decoration: none;
+    color: white;
+
 .seperation {
     padding: 30px;
     background-color: black;
@@ -103,4 +108,5 @@ input {
 .webpageBtn {
  
     background-color: #D93D04;
+
 }
