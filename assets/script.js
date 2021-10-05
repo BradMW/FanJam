@@ -34,16 +34,16 @@ function lyricsApi() {
       .then(function (data) {
           console.log(data);
           //append lyrics to maybe p tags in the first column
-          // var lyricsContainer = $("<div class='lyrics'></div>");
+          var lyricsContainer = $("<p id='lyrics'></p>");
 
           var artistName = $("#artistName").text(artist.toUpperCase());
           // // a wrapper for the song title being searched
-          var songTitle = $("#songLyrics").text(data.lyrics);
+          var songTitle = $("#lyrics").text(data.lyrics);
 
           //appending elements to the containers
-          body.append(lyricsContainer);
-          lyricsContainer.append(artistName);
-          lyricsContainer.append(songTitle);
+        //   body.append(lyricsContainer);
+        //   lyricsContainer.append(artistName);
+        //   lyricsContainer.append(songTitle);
           getHistory();
       });
       console.log("Ending lyrics functions.");
@@ -51,8 +51,8 @@ function lyricsApi() {
 
 function getHistory(){
     console.log("Starting getHistory");
-    var searchHistoryDiv = $("#historyBtns");
-    searchHistoryDiv.html("");
+    var searchHistoryDiv = $("#resultsArea");
+    // searchHistoryDiv.html("");
 
     if(localStorage.getItem("title")) {
         // get string from local storage
@@ -62,7 +62,7 @@ function getHistory(){
         
         // for loop to create buttons of history of songs searches
         for (var i = 0; i < searchHistory.length; i++) {
-            var newBtns = $("<button class='btn btn-primary' type='button'>Search</button>")
+            var newBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i>Concerts</button>")
             console.log(newBtns);
             newBtns.text(searchHistory[i]);
             searchHistoryDiv.append(newBtns);
@@ -120,7 +120,7 @@ function attractions() {
         console.log(data);
         console.log(data._embedded.events[0].name);
         console.log(data._embedded.events[0]._embedded.venues[0].city.name);
-        var concertsDiv = $("#concertBtns"); //div
+        var concertsDiv = $("#concertsDiv"); //div
         var artistName = data._embedded.events[0].name
         concertsDiv.html("");
         for (var i=0; i < data._embedded.events.length; i++) {
@@ -128,7 +128,7 @@ function attractions() {
                 var concertURL = data._embedded.events[i].url;
                 var concertCity = data._embedded.events[i]._embedded.venues[0].city.name
                 console.log(concertURL);
-                var concertBtns = $("<button class='btn btn-primary' type='button'></button>")
+                var concertBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i>Concerts</button>")
                 var concertLink = $("<a class=concertLink id='concerts'></a>");
                 concertLink.attr("href", concertURL);
                 concertLink.text(artistName + " in " + concertCity);
