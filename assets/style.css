@@ -31,6 +31,7 @@ html {
 }
 #lyrics {
     font-family: 'Libre Franklin', sans-serif;
+    text-align: start;
 }
 
 #artistName {

@@ -34,16 +34,13 @@ function lyricsApi() {
       .then(function (data) {
           console.log(data);
           //append lyrics to maybe p tags in the first column
-          var lyricsContainer = $("<p id='lyrics'></p>");
-
-          var artistName = $("#artistName").text(artist.toUpperCase());
-          // // a wrapper for the song title being searched
-          var songTitle = $("#lyrics").text(data.lyrics);
-
-          //appending elements to the containers
-        //   body.append(lyricsContainer);
-        //   lyricsContainer.append(artistName);
-        //   lyricsContainer.append(songTitle);
+          var lyricsContainer = $("#artist-lyrics");
+          var artistName = $("<p id='artistName'></p>").text(artist.toUpperCase());
+          var songTitle = $("<p id='lyrics'></p>").text(data.lyrics);
+          songTitle.replace('Paroles de la chanson', '');
+          console.log(songTitle);
+          lyricsContainer.append(artistName);
+          lyricsContainer.append(songTitle);
           getHistory();
       });
       console.log("Ending lyrics functions.");
