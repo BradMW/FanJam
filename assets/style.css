@@ -1,0 +1,18 @@
+body {
+    background-color: black;
+}
+
+.results-col {
+    margin: auto;
+    padding: 5%;
+    background-color: white;
+    height: fit-content;
+    
+}
+
+#artistName {
+    font-size: x-large;
+   text-align: start;
+   margin: 5px;
+   padding-left: 2%;
+}
