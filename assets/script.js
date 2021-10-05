@@ -4,7 +4,7 @@ var searchHistory = [];
 var search = $("#search");
 var body = $("#container");
 
-search.on("click", function (event) {
+$('#formContainer').on("click", '#rockOnBtn', function(event) { 
   event.preventDefault();
   // take input value to create city's name variable to pass to 5 day forecast function
   artist = $(".inputArea1").val();
@@ -63,7 +63,8 @@ function lyricsApi() {
 }
 
 function getHistory(){
-    var searchHistoryDiv = //$("#historyBtns");
+    console.log("Starting getHistory");
+    var searchHistoryDiv = $("#historyBtns");
     searchHistoryDiv.html("");
 
     if(localStorage.getItem("title")) {
@@ -73,7 +74,7 @@ function getHistory(){
 
         // for loop to create buttons of history of city searches
         for (var i = 0; i < searchHistory.length; i++) {
-            var newBtns = //$("<button class='btn btn-primary' type='button'>Search</button>")
+            var newBtns = $("<button class='btn btn-primary' type='button'>Search</button>")
             console.log(newBtns);
             newBtns.text(searchHistory[i]);
             searchHistoryDiv.append(newBtns);
@@ -88,33 +89,36 @@ function getHistory(){
             })
         }
     }
+    console.log('Ending getHistory');
 }
 
 function attractions() {
-    var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`
+  console.log('Starting attractions');  
+  var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
     fetch(attractionsURL)
         .then(function (response) {
             return response.json();
         })
         .then (function(data) {
             console.log(data);
-
+            matchArtist(data._embedded.attractions);
         // capitalize all letters from input
-        //   if (data.attractions.name.toUpperCase() === artist.toUpperCase && data.attractions.upcomingEvents._total > 0) {
+        // if (data.attractions[].name.toUpperCase() === artist.toUpperCase && data.attractions.upcomingEvents._total > 0) {
             // make all the variables for the buttons(if statement for if the artist has a link to their fb, youtube, etc)
             // prepend photo to lyrics side of columns
             // append social media buttons
             // call events function
-            // events(artist)};
+            events(artist);
             // else{
                 // append the "this artist has no upcoming events" to html}
 
         })
   }
 
-  function events(artist) {
-      var eventsURL = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`
-      fetch(eventsURL)
+function events(artist) {
+    console.log('Starting events');
+    var eventsURL = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`
+    fetch(eventsURL)
       .then(function (response) {
         return response.json();
     })
@@ -136,4 +140,4 @@ function attractions() {
 
 // function for "search new artist" button at the bottom of both columns that scrolls user back to the top of the page
 // clear html inner.HTML("")
-// append buttons to the bottom of the lyrics with title of the song. Create an array in local storage to do this.
+// append buttons to the bottom of the lyrics with title of the song. Create an array in local storage to do this
