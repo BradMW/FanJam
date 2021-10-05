@@ -34,6 +34,16 @@ function lyricsApi() {
       .then(function (data) {
           console.log(data);
           //append lyrics to maybe p tags in the first column
+          // var lyricsContainer = $("<div class='lyrics'></div>");
+
+          var artistName = $("#artistName").text(artist.toUpperCase());
+          // // a wrapper for the song title being searched
+          var songTitle = $("#songLyrics").text(data.lyrics);
+
+          //appending elements to the containers
+          body.append(lyricsContainer);
+          lyricsContainer.append(artistName);
+          lyricsContainer.append(songTitle);
           getHistory();
       });
       console.log("Ending lyrics functions.");
