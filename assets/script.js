@@ -45,18 +45,14 @@ function lyricsApi() {
 
       //append lyrics to maybe p tags in the first column
       // creates a main container to hold the song artist and title
-      var lyricsContainer = $("<div class='lyrics'></div>");
-      console.log(lyricsContainer);
-
-      var artistName = $("<p class='song-artist'></p>").text(artist);
-      console.log(artistName);
+      var artistName = $("#artistName").text(artist.toUpperCase());
       // // a wrapper for the song title being searched
-      var songTitle = $("<p class='song-title'></p>").text(data.lyrics);
+      var songTitle = $("#songLyrics").text(data.lyrics);
 
       //appending elements to the containers
-      body.append(lyricsContainer);
-      lyricsContainer.append(artistName);
-      lyricsContainer.append(songTitle);
+      // body.append(lyricsContainer);
+      // lyricsContainer.append(artistName);
+      // lyricsContainer.append(songTitle);
 
       getHistory()
     });
