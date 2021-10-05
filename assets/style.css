@@ -2,12 +2,35 @@ body {
     background-color: black;
 }
 
+#titleTxt {
+    font-size: xx-large;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 .results-col {
     margin: auto;
-    padding: 5%;
-    background-color: white;
+    padding: 0%;
+    color: white;
+    background-color: #0D0D0D;
     height: fit-content;
-    
+}
+
+#titleTxt {
+    font-family: 'Corben', cursive;
+    font-size: 2em;
+}
+#aboutTxt{
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 1em;
+}
+#artistInfo {
+    font-family: 'Libre Franklin', sans-serif;
+}
+#lyrics {
+    font-family: 'Libre Franklin', sans-serif;
 }
 
 #artistName {
@@ -36,4 +59,56 @@ nav {
 
 input {
     color: white
+}
+
+
+#concerts {
+    text-decoration: none;
+    color: white;
+}
+
+.seperation {
+    padding: 30px;
+    background-color: black;
+}
+
+.infoBtn {
+   margin: auto;
+   border-radius: 10px;
+}
+
+.web-links {
+    padding-top: 1.5%;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+
+.twitterBtn {
+ 
+    background-color: #27B9F2;
+}
+
+.youtubeBtn {
+ 
+    background-color: #A60808;
+}
+
+.concertBtn {
+    background-color: #026BDE;
+    width: 96%;
+    /* padding-left: 40%;
+    padding-right: 40%; */
+    border-radius: 0px 0px 50px 50px;
+}
+
+.facebookBtn {
+ 
+    background-color: #335AA6;
+}
+
+.webpageBtn {
+ 
+    background-color: #D93D04;
+
 }
