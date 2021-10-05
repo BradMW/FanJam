@@ -31,26 +31,26 @@
           <div class="col s1">
           </div>
           <div class="col s10">
-            <div class="card align center">
-              <div class="card-content white-text">
-                <span class="card-title">Fan Jam</span>
-                <p>Welcome to Fan Jam where you can prepare for your upcoming concert by searching for the artist and song title to get the latest information.
-                  You'll be able to sing along with song lyrics and links to your favorite bands!
-                </p>
-              </div>
+            <div id ='formContainer' class="card align center">
+                <div class="card-content white-text">
+                  <span class="card-title">Fan Jam</span>
+                  <p>Welcome to Fan Jam where you can prepare for your upcoming concert by searching for the artist and song title to get the latest information.
+                    You'll be able to sing along with song lyrics and links to your favorite bands!
+                  </p>
+                </div>
                 <form class="col s12">
                   <div class="row">
                     <div class="input-field col s6">
-                      <input id="icon_prefix" type="text" class="validate">
+                      <input id="icon_prefix" type="text" class="validate artistInput">
                       <label for="icon_prefix">Artist</label>
                     </div>
                     <div class="input-field col s6">
-                      <input id="icon_telephone" type="tel" class="validate">
+                      <input id="icon_telephone" type="tel" class="validate titleInput">
                       <label for="icon_telephone">Song Title</label>
                     </div>
                   </div>
                 </form>
-                <a class="color black pulse btn-large"><i class="material-icons left">music_note</i>Rock on!</a>
+                <button id="rockOnBtn" class="color black pulse btn-large"><a><i class="material-icons left">music_note</i>Rock on!</a></button>
               </div>
             </div>
           </div>
