@@ -16,3 +16,24 @@ body {
    margin: 5px;
    padding-left: 2%;
 }
+
+nav {
+    background-image: url('images/concertyellow615h.jpg');
+    background-position: center;
+    background-size: 100%;
+    height: 615px;
+    padding: 5%;
+}
+
+/* Glassmorphism card effect */
+.card {
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+input {
+    color: white
+}
