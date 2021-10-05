@@ -1,17 +1,17 @@
 var artist = '';
 var title = '';
 var searchHistory = [];
-var search = //grab html search button
 
 
-search.on("click", function(event) {
+$('#formContainer').on("click", '#rockOnBtn', function(event) {
     event.preventDefault();
-    // take input value to create city's name variable to pass to 5 day forecast function
-    var artist = $(".inputArea1").val();
-    var title = $(".inputArea2").val();
+    console.log('Rock On! Clicked');
+    // take input value 
+    artist = $(".artistInput").val();
+    title = $(".titleInput").val();
     console.log(artist);
 
-    // need to add city name to buttons
+    // need to add song name to buttons
     var searchedSong = $("<button class='btn btn-primary' type='button'>Search</button>");
     searchedSong.click(function(event){
             event.preventDefault();
@@ -22,12 +22,12 @@ search.on("click", function(event) {
     searchHistory.push(title);
     console.log(title);
     // convert object to JSON string
-    const jsonCityArr = JSON.stringify(searchHistory);
+    const jsonSongArr = JSON.stringify(searchHistory);
     // save to local storage
-    localStorage.setItem("title", jsonCityArr);
+    localStorage.setItem("title", jsonSongArr);
     searchedSong.text(title);
     lyricsApi(artist, title);
-    attractions(artist);
+    //attractions(artist);
 });
 
 
@@ -40,7 +40,7 @@ function lyricsApi() {
     .then(function (data) {
         console.log(data);
       //   append lyrics to maybe p tags in the first column
-        getHistory()
+        //getHistory();
     });
 }
 
