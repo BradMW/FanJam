@@ -37,3 +37,8 @@ nav {
 input {
     color: white
 }
+
+#concerts {
+    text-decoration: none;
+    color: white;
+}
