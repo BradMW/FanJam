@@ -118,32 +118,6 @@ function visitPage(url) {
     window.open(url, '_blank');
   }
   
-  function attractions() {
-    var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
-    fetch(attractionsURL)
-      .then(function (response) {
-          return response.json();
-      })
-      .then (function(data) {
-          let temp = matchArtist(data._embedded.attractions);
-          console.log(temp.externalLinks);
-          $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
-          $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
-          $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
-          $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
-
-            //appending artist image to lyrics-side
-            console.log(data);
-        for (var i=0; i < data._embedded.attractions.length; i++){
-          if (temp.name.toUpperCase() === artist.toUpperCase())  {
-            var artistDiv = $(".artistImage");
-            artistDiv.html("");
-            var artistImg = $("<img>");
-            artistImg.attr("src", temp.images[0].url);
-            artistDiv.append(artistImg);
-             }
-        }
-
 function attractions() {
   var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
   fetch(attractionsURL)
@@ -152,7 +126,14 @@ function attractions() {
     })
     .then (function (data) {
         let temp = matchArtist(data._embedded.attractions);
-        console.log(temp.externalLinks);
+        
+        if (temp.name.toUpperCase() === artist.toUpperCase())  {
+          var artistDiv = $(".artistImage");
+          artistDiv.html("");
+          var artistImg = $("<img>");
+          artistImg.attr("src", temp.images[0].url);
+          artistDiv.append(artistImg);
+        }
         if(temp.externalLinks.twitter){
           $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
           console.log(temp.externalLinks.twitter[0].url);
