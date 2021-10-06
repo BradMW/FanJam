@@ -5,6 +5,13 @@ var searchArtistHistory = [];
 
 $('#formContainer').on("click", '#rockOnBtn', function(event) {
     event.preventDefault();
+   
+    $('html, body').animate({
+       scrollTop: $('#resultsArea').offset().top
+      }, 800, function(){
+
+      window.location.href = '#resultsArea';
+    });
     
     // take input value 
     artist = $(".artistInput").val();
@@ -69,6 +76,7 @@ function getHistory(){
   songInput.html('');
   dataListEl.html('');
 
+
   if(localStorage.getItem("title") && localStorage.getItem("artist")) { 
       // get string from local storage
       searchSongHistory = JSON.parse(localStorage.getItem("title"));
@@ -96,8 +104,6 @@ function getHistory(){
           }
         }
     }
-
-
 
 function matchArtist(artistArray){
   for(let i = 0; i < artistArray.length; i++){
@@ -147,13 +153,23 @@ function attractions() {
     .then (function (data) {
         let temp = matchArtist(data._embedded.attractions);
         console.log(temp.externalLinks);
-        $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
-        $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
-        $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
-        $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
-
+        if(temp.externalLinks.twitter){
+          $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
+          console.log(temp.externalLinks.twitter[0].url);
+        }
+        if(temp.externalLinks.youtube){
+          $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
+          console.log(temp.externalLinks.youtube[0].url);
+        }
+        if(temp.externalLinks.facebook){
+          $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
+        }
+        if(temp.externalLinks.homepage){
+          $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
+        }
         if(temp.upcomingEvents._total != 0){
-            events();
+          events();
+
         }else{
             $("#concertsDiv").append($("<p>This artist has no upcoming events</p>"));
         }
@@ -190,10 +206,9 @@ var rootElement = document.documentElement;
       
   })
 }
-//   Ron added for dropdown menus for recent searches
-// $('.dropdown-trigger').dropdown();
 
 
+// scroll to top button appears at bottom 80% of screen
 function handleScroll() {
   // Do something on scroll
   var scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
@@ -215,28 +230,3 @@ function scrollToTop() {
 }
 scrollToTopBtn.addEventListener("click", scrollToTop);
 document.addEventListener("scroll", handleScroll);
-
-// $(function() {
-//     var header = $("header");
-//     var backgrounds = new Array(
-//     "url(assets/images/concert2.jpg)",
-//     "url(assets/images/concert3.jpg)",
-//     "url(assets/images/concerthands.jpg)",
-//     "url(assets/images/concertyellow615h.jpg)"
-//     );
-//     var current = 0;
-    
-//     function nextBackground() {
-//     header.css(
-//     "background",
-//     backgrounds[current = ++current % backgrounds.length]
-//     );
-    
-//     setTimeout(nextBackground, 10000);
-//     }
-//     setTimeout(nextBackground, 10000);
-//     body.css("background", backgrounds[0]);
-//     });
-// function for "search new artist" button at the bottom of both columns that scrolls user back to the top of the page
-// clear html inner.HTML("")
-// append buttons to the bottom of the lyrics with title of the song. Create an array in local storage to do this
