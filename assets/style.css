@@ -2,17 +2,9 @@ body {
     background-color: black;
 }
 
-#titleTxt {
-    font-size: xx-large;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
 .results-col {
     margin: auto;
-    padding: 2%;
+    padding: 0%;
     color: white;
     background-color: #0D0D0D;
     height: fit-content;
@@ -20,9 +12,11 @@ html {
 
 #titleTxt {
     font-family: 'Corben', cursive;
-    font-size: 2em;
+    font-size: 5em;
+    line-height: 1em;
 }
 #aboutTxt{
+    margin-top: 20px;
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 1em;
 }
@@ -40,12 +34,15 @@ html {
    padding-left: 2%;
 }
 
-nav {
+header {
     background-image: url('images/concertyellow615h.jpg');
     background-position: center;
     background-size: 100%;
-    height: 615px;
-    padding: 5%;
+    height: 100vh;
+    padding-top: 5%;
+}
+h1 {
+    margin-top: -20px;
 }
 
 /* Glassmorphism card effect */
@@ -62,7 +59,17 @@ input {
     color: white
 }
 
+.searchHistoryBtn {
+    border-radius: 50px 50px 50px 50px;
+  }
 
+#lyricsBorder {
+    border-style: solid;
+    border-left: rgb(255, 255, 255);
+    border-right: rgb(255, 255, 255);
+    border-bottom: rgb(255, 255, 255);
+    border-width: 1px;
+}
 #concerts {
     text-decoration: none;
     color: white;
@@ -75,12 +82,13 @@ input {
 .infoBtn {
    margin: auto;
    border-radius: 10px;
+   min-width: 20px;
 }
 
 .web-links {
-    padding-top: 1%;
-    padding-left: 6%;
-    padding-right: 6%;
+    padding-top: 1.5%;
+    padding-left: 3%;
+    padding-right: 3%;
 }
 
 
@@ -96,8 +104,9 @@ input {
 
 .concertBtn {
     background-color: #026BDE;
-    padding-left: 40%;
-    padding-right: 40%;
+    width: 96%;
+    /* padding-left: 40%;
+    padding-right: 40%; */
     border-radius: 0px 0px 50px 50px;
 }
 
