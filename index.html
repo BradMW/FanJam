@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <!-- materialize -->
+    <link rel="stylesheet" href="./assets/reset.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Corben:wght@700&family=Libre+Franklin:wght@100&family=Merriweather+Sans:wght@300&display=swap" rel="stylesheet">
     <link
@@ -20,7 +21,7 @@
     <link
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"/>
-    <!--Custom Style-->>
+    <!--Custom Style-->
     <link rel="stylesheet" href="./assets/style.css" />
 
     <title>FanJAm!</title>
@@ -45,28 +46,21 @@
               <!-- input fields -->
                 <form class="col s12">
                   <div class="row">
+
+
                     <div class="input-field col s6">
                       <!-- Artist Search -->
-                      <input list="searchHistoryArtist" id="icon_prefix" type="tel" class="validate artistInput">
-                      <datalist id="searchHistoryArtist">
-                        <!-- <option>recent search ex1</option>
-                        <option>recent search ex2</option>
-                        <option>recent search ex3</option>
-                        <option></option>
-                        <option></option> -->
-                      </datalist>
+                      <input list="searchHistoryArtist" id="icon_prefix" type="tel" class="validate artistInput artistDiv">
+               
                       <label for="icon_prefix">Artist</label>
                     </div>
+
+
                     <div class="input-field col s6">
                       <!-- Song Title Search -->
-                      <input list="searchHistoryTitle" id="icon_telephone" type="tel" class="validate titleInput">
-                      <datalist id="searchHistoryTitle">
-                        <option>recent search ex1</option>
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                      </datalist>
+                      <input list="searchHistoryTitle" id="icon_telephone" type="tel" class="validate titleInput songDiv">
+
+                      </select>
                       <label for="icon_telephone">Song Title</label>
                     </div>
                   </div>

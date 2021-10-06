@@ -2,6 +2,7 @@ var artist = '';
 var title = '';
 var searchSongHistory = [];
 var searchArtistHistory = [];
+
 $('#formContainer').on("click", '#rockOnBtn', function(event) {
     event.preventDefault();
     
@@ -11,18 +12,18 @@ $('#formContainer').on("click", '#rockOnBtn', function(event) {
 
     searchSongHistory.push(title);
     searchArtistHistory.push(artist);
-    // convert object to JSON string
 
+    // convert object to JSON string
     const jsonSongArr = JSON.stringify(searchSongHistory);
     const jsonArtistArr = JSON.stringify(searchArtistHistory);
+
     // save song title to local storage
     localStorage.setItem("title", jsonSongArr);
-    
     // save artist name to local storage
     localStorage.setItem("artist", jsonArtistArr);
 
     lyricsApi();
-    // attractions();
+    attractions();
 });
 
 
@@ -45,7 +46,6 @@ function generateLyrics(data){
     var lyricsContainer = $("#artist-lyrics");
     lyricsContainer.html('');
     var lyrics = data.lyrics;
-    // console.log(lyrics);
     lyrics = lyrics.replace('Paroles de la chanson', '');
     $('#artistName').text(artist.toUpperCase());
     $('#songName').text(title.toUpperCase());
@@ -55,34 +55,45 @@ function generateLyrics(data){
 
 
 function getHistory(){
-  var searchHistoryList = $("#searchHistoryArtist");
-  // console.log(searchHistoryList);
-  if(localStorage.getItem("title")) { 
+  // var searchArtistList = $("#searchHistoryArtist");
+  // var searchSongList = $("#searchHistoryTitle");
+  var artistInput = $('.artistDiv');
+  var songInput = $('.songDiv');
+  var dataListEl = $('<datalist id="searchHistoryArtist"></datalist>');
+  var songListEl = $('<datalist id="searchHistoryArtist"></datalist>');
+
+  artistInput.html('');
+  songInput.html('');
+  dataListEl.html('');
+
+  if(localStorage.getItem("title") && localStorage.getItem("artist")) { 
       // get string from local storage
-      searchHistory = JSON.parse(localStorage.getItem("title"));
-      // console.log(searchHistory);
+      searchSongHistory = JSON.parse(localStorage.getItem("title"));
+      searchArtistHistory = JSON.parse(localStorage.getItem("artist"));
 
-      // for loop to create buttons of history of songs searches
-      for (var i = 0; i < searchHistory.length; i++) {
-          // var newBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i>Concerts</button>")
+          // for loop to create items in the artist dropdown
+        for (var j = 0; j < searchArtistHistory.length; j++) {
           var optionItem = $('<option></option>');
-          optionItem.text(searchHistory[i]);
-
-
-          searchHistoryList.append(optionItem);
-          // searchHistoryDiv.append(newBtns);//
-          // searchHistoryDiv.append(newBtns)
-          // newBtns.click(function(event) {
-          //     event.preventDefault();
-          //     var searchedTitle = $(event.target);
-          //     var prevTitle = searchedTitle.text();
-          //     // console.log(prevTitle);
-          //     lyricsApi(prevTitle);
-          //     attractions(prevTitle);
+          optionItem.text(searchArtistHistory[j]);
+          optionItem.attr('value', searchArtistHistory[j])
+          artistInput.append(dataListEl);
+          dataListEl.append(optionItem);
+          artistInput.append(dataListEl);
           }
-      }
-  }
 
+
+        //for loop to create items in the songs dropdown
+        for (var i = 0; i < searchSongHistory.length; i++) {
+          var optionItem = $('<option></option>');
+          optionItem.text(searchSongHistory[i]);
+          optionItem.attr('value', searchSongHistory[i]);
+          songInput.append(songListEl);
+          songListEl.append(optionItem);
+          songInput.append(songListEl);
+          }
+
+        }
+    }
 
 
 
@@ -119,7 +130,7 @@ function getHistory(){
 
 function matchArtist(artistArray){
   for(let i = 0; i < artistArray.length; i++){
-    if(artistArray[i].name === artist){
+    if(artistArray[i].name === artist.toUpperCase()){
       return artistArray[i];
     }
   }
@@ -130,27 +141,26 @@ function visitPage(url) {
   window.open(url, '_blank');
 }
 
-// function attractions() {
-//   var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
-//   fetch(attractionsURL)
-//     .then(function (response) {
-//         return response.json();
-//     })
-//     .then (function(data) {
-//         let temp = matchArtist(data._embedded.attractions);
-//         console.log(temp.externalLinks.homepage[0]);
-//         $('.twitterBtn').append($('<a>').attr('href', temp.externalLinks.twitter[0].url));
-//         $('.youtubeBtn').append($('<a>').attr('href', temp.externalLinks.youtube[0].url));
-//         $('.facebookBtn').append($('<a>').attr('href', temp.externalLinks.facebook[0].url));
-//         $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
-//         if(temp.upcomingEvents._total != 0){
-//           events();
-//         }else{
+function attractions() {
+  var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
+  fetch(attractionsURL)
+    .then(function (response) {
+        return response.json();
+    })
+    .then (function (data) {
+        let temp = matchArtist(data._embedded.attractions);
+        console.log(temp.externalLinks);
+        $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
+        $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
+        $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
+        $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
+        if(temp.upcomingEvents._total != 0){
+          events();
+        }else{
           
-//         }
-//     })
-// }
-
+        }
+    })
+}
 
   function events() {
       var eventsURL = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${artist}&apikey=2auLbJzQE7PGFSioWJ1GEiuTpEw12S1r`
