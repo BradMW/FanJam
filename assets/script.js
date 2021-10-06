@@ -116,6 +116,7 @@ function visitPage(url) {
   }
 
 function events() {
+
     var eventsURL = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${artist}&apikey=2auLbJzQE7PGFSioWJ1GEiuTpEw12S1r`
     fetch(eventsURL)
     .then(function (response) {
@@ -142,9 +143,9 @@ function events() {
   })
 }
 
-
 var scrollToTopBtn = document.querySelector(".scrollToTopBtn");
 var rootElement = document.documentElement;
+
 
 function handleScroll() {
   // Do something on scroll
