@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <!-- materialize -->
+    <link rel="stylesheet" href="./assets/reset.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Corben:wght@700&family=Libre+Franklin:wght@100&family=Merriweather+Sans:wght@300&display=swap" rel="stylesheet">
     <link
@@ -13,9 +14,16 @@
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
       crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Fonts -->
+    <!-- 70s style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Corben:wght@700&family=Libre+Franklin:wght@100&family=Merriweather+Sans:wght@300&display=swap" rel="stylesheet">    
+    <!-- jazzy -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fascinate+Inline&display=swap" rel="stylesheet"> -->
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
@@ -45,35 +53,32 @@
               <!-- input fields -->
                 <form class="col s12">
                   <div class="row">
+
+
                     <div class="input-field col s6">
                       <!-- Artist Search -->
-                      <input list="searchHistoryArtist" id="icon_prefix" type="tel" class="validate artistInput">
-                      <datalist id="searchHistoryArtist">
-                        <option>recent search ex1</option>
-                        <option>recent search ex2</option>
-                        <option>recent search ex3</option>
-                        <option></option>
-                        <option></option>
-                      </datalist>
+                      <input list="searchHistoryArtist" id="icon_prefix" type="tel" class="validate artistInput artistDiv">
+               
+
                       <label for="icon_prefix">Artist</label>
                     </div>
+
+
                     <div class="input-field col s6">
                       <!-- Song Title Search -->
-                      <input list="searchHistoryTitle" id="icon_telephone" type="tel" class="validate titleInput">
-                      <!-- <datalist id="searchHistoryTitle">
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                      </datalist> -->
-                      <label for="icon_telephone">Song Title</label>
+                      <input list="searchHistorySong" id="icon_telephone" type="tel" class="validate titleInput songDiv">
+
+                      <label for="icon_prefix">Song Title</label>
                     </div>
                   </div>
-
-                  
                 </form>
-                <button class="color black pulse btn-large" id="rockOnBtn"><a href="#resultsArea"> </a><i class="material-icons left">music_note</i>Rock on!</button>
+
+<!-- <a href="#resultsArea">
+                <button class="color black pulse btn-large"> <i class="material-icons left">music_note</i>Rock on!</button>
+</a>     -->
+                <button class="color black pulse btn-large" id="rockOnBtn"><i class="material-icons left">music_note</i>Rock on!</button>
+                <br><br>
+
               </div>
             </div>
           </div>
@@ -82,7 +87,7 @@
           </div>
     </header>
     <!-- Results page -->
-    <section class="results-col center-align">
+    <section class="results-col center-align hidden">
       <div class="row" id="resultsArea">
         <!-- left column for lyrics-->
         <div class="col s6"> 
@@ -90,28 +95,16 @@
             <div class="col s12 m12">
               <div class="card left-align">
                 <!-- Band picture? -->
-                <div class="card-image ">
+                <div class="card-image artistImage">
                   
                   
-                  <img src="https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?cs=srgb&dl=pexels-wendy-wei-1190297.jpg&fm=jpg">
+                  <!-- <img src="https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?cs=srgb&dl=pexels-wendy-wei-1190297.jpg&fm=jpg"> -->
                   <span class="card-title" id="artistName"></span>
                 <!-- <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a> -->
                 </div>
                 <p id="songName">Artist Name</p>
                   <div id="artist-lyrics" class="card-content">
                     <p id="lyrics">I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                    <!-- buttons for recent history attn:Christa -->
-                    <div>
-                      <p id="lyricsBorder">Rewind! Your recent picks:</p>
-                      <button class="searchHistoryBtn">Song title</button>
-                      <button class="searchHistoryBtn">Song title</button>
-                      <button class="searchHistoryBtn">Song title</button>
-                      <button class="searchHistoryBtn">Song title</button>
-                      <button class="searchHistoryBtn">Song title</button>
-                      <button class="searchHistoryBtn">Song title</button>
-                      <button class="searchHistoryBtn">Song title</button>
-                      <button class="searchHistoryBtn">Song title</button>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -127,34 +120,21 @@
                     <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large twitterBtn infoBtn fa fa-twitter"> Twitter</button>
                     <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large youtubeBtn infoBtn fa fa-youtube"> Youtube</button>
                     <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large facebookBtn infoBtn fa fa-facebook"> FaceBook</button>
-                    <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large webpageBtn infoBtn">Webpage<i class="material-icons right">cloud</i></button>
+                    <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large webpageBtn infoBtn">Webpage<i class="material-icons left">tab</i></button>
+
                      </div>
-                  <!-- <img src="https://images.pexels.com/photos/164879/pexels-photo-164879.jpeg?cs=srgb&dl=pexels-pixabay-164879.jpg&fm=jpg"> -->
-                  <!-- <span class="card-title">Card Title</span> -->
-                  <!-- <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a> -->
-                  </div>
-<!--                   <p id="artistName">Artist Name</p> -->
-                  <div id="concertsDiv">
-<!--                   <button class="waves-effect waves-light btn-large concertBtn"><i class="material-icons left">cloud</i>Concerts</button> -->
-              </div>
-<!--                     <div class="card-content">
-                    <p id="artistInfo">I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-                    <br><br>
-                    <p id="artistInfo">From ticket master API</p>
-                    <br><br>
-                    <p id="artistInfo">info about the events</p>
-                     <br><br>
-                    <p id="artistInfo">This might be a url or more info!. Who knows.</p> -->
+                  <!-- <img src="https://images.pexels.com/photos/164879/pexels-photo-164879.jpeg?cs=srgb&dl=pexels-pixabay-164879.jpg&fm=jpg">
+                  <span class="card-title">Card Title</span> -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       <div id="searchedDiv">
 
       </div>
+      <button class="scrollToTopBtn"><i class="material-icons" style="font-size:36px">mic</i>Top</button>
     </section>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

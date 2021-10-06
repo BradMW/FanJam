@@ -1,5 +1,12 @@
+* {
+    box-sizing: border-box;
+}
 body {
     background-color: black;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 .results-col {
@@ -11,14 +18,30 @@ body {
 }
 
 #titleTxt {
+    /* font-family: 'Fascinate Inline'; */
     font-family: 'Corben', cursive;
     font-size: 5em;
     line-height: 1em;
+    background-color: #f3ec78;
+    background-image: linear-gradient(45deg, #bd4cf1, #2dd441);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
 }
+
 #aboutTxt{
     margin-top: 20px;
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 1em;
+    background-color: #f3ec78;
+    background-image: linear-gradient(45deg, #bd4cf1, #2dd441);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
 }
 #artistInfo {
     font-family: 'Libre Franklin', sans-serif;
@@ -28,23 +51,36 @@ body {
     text-align: start;
 }
 
-#artistName {
+#songName {
     font-size: x-large;
-   text-align: start;
-   margin: 5px;
-   padding-left: 2%;
+    margin: auto;
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+#artistName {
+    font-size: xxx-large;
+    text-shadow: 0 0 4px #A62F03, 0 0 4px #A62F03, 0 0 4px #A62F03, 0 0 4px #A62F03;
+    text-align: start;
+    margin: 5px;
+    padding-left: 2%;
 }
 
 header {
     background-image: url('images/concertyellow615h.jpg');
+    background-repeat: no-repeat;
+ 
     background-position: center;
-    background-size: 100%;
+    background-size: cover;
     height: 100vh;
     padding-top: 5%;
 }
 h1 {
     margin-top: -20px;
 }
+/* datalist{
+    display:block;
+} */
 
 /* Glassmorphism card effect */
 .card {
@@ -61,9 +97,9 @@ input {
 }
 
 
-/* .hide {
+.hidden {
     display:none;
-} */
+}
 
 .searchHistoryBtn {
     border-radius: 50px 50px 50px 50px;
@@ -104,6 +140,17 @@ input {
     background-color: #27B9F2;
 }
 
+.facebookBtn:hover,
+.webpageBtn:hover,
+.youtubeBtn:hover,
+.twitterBtn:hover {
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
 .youtubeBtn {
  
     background-color: #A60808;
@@ -112,12 +159,16 @@ input {
 .concertBtn {
     background-color: #026BDE;
     width: 96%;
-    border-radius: 0px 0px 50px 50px;
+    border-radius: 100px 100px 100px 100px;
+}
+
+.concertBtn:hover {
+    background-color: #051f3a;
 }
 
 .facebookBtn {
  
-    background-color: #335AA6;
+    background-color: #07235cad;
 }
 
 .webpageBtn {
@@ -125,3 +176,29 @@ input {
     background-color: #D93D04;
 
 }
+
+.scrollToTopBtn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 48px;
+    width: 48px;
+    /* place it at the bottom right corner */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    /* keep it at the top of everything else */
+    z-index: 100;
+    /* hide with opacity */
+    opacity: 0;
+    /* also add a translate effect */
+    transform: translateY(100px);
+    /* and a transition */
+    transition: all 0.5s ease;
+}
+.showBtn {
+    opacity: 1;
+    transform: translateY(0);
+  }
