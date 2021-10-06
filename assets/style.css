@@ -2,17 +2,13 @@ body {
     background-color: black;
 }
 
-#titleTxt {
-    font-size: xx-large;
-}
-
 html {
     scroll-behavior: smooth;
 }
 
 .results-col {
     margin: auto;
-    padding: 0%;
+    padding: 2%;
     color: white;
     background-color: #0D0D0D;
     height: fit-content;
@@ -20,9 +16,12 @@ html {
 
 #titleTxt {
     font-family: 'Corben', cursive;
-    font-size: 2em;
+    font-size: 5em;
+    line-height: 1em;
 }
+
 #aboutTxt{
+    margin-top: 20px;
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 1em;
 }
@@ -31,21 +30,35 @@ html {
 }
 #lyrics {
     font-family: 'Libre Franklin', sans-serif;
+    text-align: start;
+}
+
+#songName {
+    font-size: x-large;
+    margin: auto;
+    padding-left: 5%;
+    padding-top: 5%;
 }
 
 #artistName {
-    font-size: x-large;
-   text-align: start;
-   margin: 5px;
-   padding-left: 2%;
+    font-size: xxx-large;
+    text-shadow: 0 0 4px #A62F03, 0 0 4px #A62F03, 0 0 4px #A62F03, 0 0 4px #A62F03;
+    text-align: start;
+    margin: 5px;
+    padding-left: 2%;
 }
 
-nav {
+header {
     background-image: url('images/concertyellow615h.jpg');
+    background-repeat: no-repeat;
+ 
     background-position: center;
-    background-size: 200%;
-    height: 1230px;
-    padding: 5%;
+    background-size: cover;
+    height: 100vh;
+    padding-top: 5%;
+}
+h1 {
+    margin-top: -20px;
 }
 
 /* Glassmorphism card effect */
@@ -55,6 +68,7 @@ nav {
     background-color: rgba(255, 255, 255, 0);
     border-radius: 12px;
     border: 1px solid rgba(209, 213, 219, 0.3);
+    
 }
 
 input {
@@ -62,6 +76,21 @@ input {
 }
 
 
+/* .hide {
+    display:none;
+} */
+
+.searchHistoryBtn {
+    border-radius: 50px 50px 50px 50px;
+  }
+
+#lyricsBorder {
+    border-style: solid;
+    border-left: rgb(255, 255, 255);
+    border-right: rgb(255, 255, 255);
+    border-bottom: rgb(255, 255, 255);
+    border-width: 1px;
+}
 #concerts {
     text-decoration: none;
     color: white;
@@ -75,18 +104,30 @@ input {
 .infoBtn {
    margin: auto;
    border-radius: 10px;
+   min-width: 20px;
 }
 
 .web-links {
-    padding-top: 1.5%;
-    padding-left: 3%;
-    padding-right: 3%;
+    padding-top: 1%;
+    padding-left: 6%;
+    padding-right: 6%;
 }
 
 
 .twitterBtn {
  
     background-color: #27B9F2;
+}
+
+.facebookBtn:hover,
+.webpageBtn:hover,
+.youtubeBtn:hover,
+.twitterBtn:hover {
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
 }
 
 .youtubeBtn {
@@ -97,14 +138,16 @@ input {
 .concertBtn {
     background-color: #026BDE;
     width: 96%;
-    /* padding-left: 40%;
-    padding-right: 40%; */
-    border-radius: 0px 0px 50px 50px;
+    border-radius: 100px 100px 100px 100px;
+}
+
+.concertBtn:hover {
+    background-color: #051f3a;
 }
 
 .facebookBtn {
  
-    background-color: #335AA6;
+    background-color: #07235cad;
 }
 
 .webpageBtn {
