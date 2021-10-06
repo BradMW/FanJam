@@ -61,9 +61,9 @@ input {
 }
 
 
-/* .hide {
+.hidden {
     display:none;
-} */
+}
 
 .searchHistoryBtn {
     border-radius: 50px 50px 50px 50px;
