@@ -154,8 +154,8 @@ function attractions() {
         }
     })
   }
-  
-
+//   Ron added for dropdown menus for recent searches
+$('.dropdown-trigger').dropdown();
 
 
 // function for "search new artist" button at the bottom of both columns that scrolls user back to the top of the page
