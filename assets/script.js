@@ -51,8 +51,6 @@ function getHistory(){
         // get string from local storage
         searchHistory = JSON.parse(localStorage.getItem("title"));
         
-
-        
         // for loop to create buttons of history of songs searches
         for (var i = 0; i < searchHistory.length; i++) {
             var newBtns = $("<button class='btn btn-primary' type='button'>Search</button>")
@@ -88,24 +86,23 @@ function visitPage(url) {
 
 function attractions() {
   var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
-    fetch(attractionsURL)
-        .then(function (response) {
-            return response.json();
-        })
-        .then (function(data) {
-            let temp = matchArtist(data._embedded.attractions);
-            console.log(temp.externalLinks.homepage[0]);
-            $('.twitterBtn').append($('<a>').attr('href', temp.externalLinks.twitter[0].url));
-            $('.youtubeBtn').append($('<a>').attr('href', temp.externalLinks.youtube[0].url));
-            $('.facebookBtn').append($('<a>').attr('href', temp.externalLinks.facebook[0].url));
-            $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
-            if(temp.upcomingEvents._total != 0){
-              events();
-            }else{
-              
-            }
-  })
-  
+  fetch(attractionsURL)
+    .then(function (response) {
+        return response.json();
+    })
+    .then (function(data) {
+        let temp = matchArtist(data._embedded.attractions);
+        console.log(temp.externalLinks.homepage[0]);
+        $('.twitterBtn').append($('<a>').attr('href', temp.externalLinks.twitter[0].url));
+        $('.youtubeBtn').append($('<a>').attr('href', temp.externalLinks.youtube[0].url));
+        $('.facebookBtn').append($('<a>').attr('href', temp.externalLinks.facebook[0].url));
+        $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
+        if(temp.upcomingEvents._total != 0){
+          events();
+        }else{
+          
+        }
+    })
 }
 
 
