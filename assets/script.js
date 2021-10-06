@@ -19,7 +19,7 @@ $('#formContainer').on("click", '#rockOnBtn', function(event) {
     localStorage.setItem("title", jsonSongArr);
     
     lyricsApi();
-    attractions(artist);
+    attractions();
 });
 
 
@@ -33,17 +33,10 @@ function lyricsApi() {
       })
       .then(function (data) {
           
-          //append lyrics to maybe p tags in the first column
-          // var lyricsContainer = $("<div class='lyrics'></div>");
-
-          var artistName = $("#artistName").text(artist.toUpperCase());
+          $("#artistName").text(artist.toUpperCase());
           // // a wrapper for the song title being searched
-          var songTitle = $("#songLyrics").text(data.lyrics);
+          $("#lyrics").text(data.lyrics);
 
-          //appending elements to the containers
-          body.append(lyricsContainer);
-          lyricsContainer.append(artistName);
-          lyricsContainer.append(songTitle);
           getHistory();
       });
       
@@ -81,28 +74,33 @@ function getHistory(){
 }
 
 function matchArtist(artistArray){
-  
   for(let i = 0; i < artistArray.length; i++){
-    console.log(artistArray[i]);
     if(artistArray[i].name === artist){
       return artistArray[i];
     }
   }
 }
 
+function visitPage(url) {
+  console.log(url);
+  window.location = url;
+}
+
 function attractions() {
-    
   var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
     fetch(attractionsURL)
         .then(function (response) {
             return response.json();
         })
         .then (function(data) {
-            
             let temp = matchArtist(data._embedded.attractions);
-            console.log(temp.upcomingEvents._total);
+            console.log(temp.externalLinks.homepage[0]);
+            $('.twitterBtn').append($('<a>').attr('href', temp.externalLinks.twitter[0].url));
+            $('.youtubeBtn').append($('<a>').attr('href', temp.externalLinks.youtube[0].url));
+            $('.facebookBtn').append($('<a>').attr('href', temp.externalLinks.facebook[0].url));
+            $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
             if(temp.upcomingEvents._total != 0){
-              events(artist);
+              events();
             }else{
               
             }
@@ -111,36 +109,27 @@ function attractions() {
 }
 
 
-  function events(artist) {
+  function events() {
       var eventsURL = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${artist}&apikey=2auLbJzQE7PGFSioWJ1GEiuTpEw12S1r`
       fetch(eventsURL)
       .then(function (response) {
         return response.json();
     })
     .then (function(data) {
-        console.log(data);
-        console.log(data._embedded.events[0].name);
-        console.log(data._embedded.events[0]._embedded.venues[0].city.name);
-        var concertsDiv = $("#concertBtns"); //div
-        var artistName = data._embedded.events[0].name
+        let event = matchArtist(data._embedded.events);
+        let concertsDiv = $("#concertBtns"); //div
         concertsDiv.html("");
-        for (var i=0; i < data._embedded.events.length; i++) {
-            if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase()) {
-                var concertURL = data._embedded.events[i].url;
-                var concertCity = data._embedded.events[i]._embedded.venues[0].city.name
-                console.log(concertURL);
-                var concertBtns = $("<button class='btn btn-primary' type='button'></button>")
-                var concertLink = $("<a class=concertLink id='concerts'></a>");
-                concertLink.attr("href", concertURL);
-                concertLink.text(artistName + " in " + concertCity);
-                console.log(concertLink);
-                concertsDiv.append(concertBtns);
-                concertBtns.append(concertLink);
-                 //just to test in temp div
-            }else {
-            concertsDiv.append($("<p>This artist has no upcoming events</p>"));
-            }
+        
+        for(let i = 0; i < event.length; i++){
+          let concertBtns = $("<button class='btn btn-primary' type='button'></button>");
+          let concertLink = $("<a class=concertLink id='concerts'></a>");
+
+          concertLink.attr("href", event.url);
+          concertLink.text(artistName + " in " + event._embedded.venues[i].city.name);
+          concertsDiv.append(concertBtns);
+          concertBtns.append(concertLink);
         }
+        
     })
   }
   
