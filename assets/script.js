@@ -24,6 +24,10 @@ $('#formContainer').on("click", '#rockOnBtn', function(event) {
 
     lyricsApi();
     attractions();
+
+   $(".artistInput").val('');
+   $(".titleInput").val('');
+
 });
 
 
@@ -55,12 +59,10 @@ function generateLyrics(data){
 
 
 function getHistory(){
-  // var searchArtistList = $("#searchHistoryArtist");
-  // var searchSongList = $("#searchHistoryTitle");
   var artistInput = $('.artistDiv');
   var songInput = $('.songDiv');
   var dataListEl = $('<datalist id="searchHistoryArtist"></datalist>');
-  var songListEl = $('<datalist id="searchHistoryArtist"></datalist>');
+  var songListEl = $('<datalist id="searchHistorySong"></datalist>');
 
   artistInput.html('');
   songInput.html('');
@@ -91,11 +93,8 @@ function getHistory(){
           songListEl.append(optionItem);
           songInput.append(songListEl);
           }
-
         }
     }
-
-
 
 
 // function getHistory(){
