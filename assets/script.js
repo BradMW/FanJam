@@ -102,10 +102,10 @@ function attractions() {
     })
     .then (function(data) {
         let temp = matchArtist(data._embedded.attractions);
-        console.log(temp.externalLinks.homepage[0]);
-        $('.twitterBtn').append($('<a>').attr('href', temp.externalLinks.twitter[0].url));
-        $('.youtubeBtn').append($('<a>').attr('href', temp.externalLinks.youtube[0].url));
-        $('.facebookBtn').append($('<a>').attr('href', temp.externalLinks.facebook[0].url));
+        console.log(temp.externalLinks);
+        $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
+        $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
+        $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
         $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
         if(temp.upcomingEvents._total != 0){
           events();
