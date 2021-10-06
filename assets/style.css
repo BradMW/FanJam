@@ -4,7 +4,7 @@ body {
 
 .results-col {
     margin: auto;
-    padding: 0%;
+    padding: 2%;
     color: white;
     background-color: #0D0D0D;
     height: fit-content;
@@ -25,6 +25,7 @@ body {
 }
 #lyrics {
     font-family: 'Libre Franklin', sans-serif;
+    text-align: start;
 }
 
 #artistName {
@@ -59,6 +60,11 @@ input {
     color: white
 }
 
+
+/* .hide {
+    display:none;
+} */
+
 .searchHistoryBtn {
     border-radius: 50px 50px 50px 50px;
   }
@@ -74,6 +80,7 @@ input {
     text-decoration: none;
     color: white;
 }
+
 .seperation {
     padding: 30px;
     background-color: black;
@@ -86,9 +93,9 @@ input {
 }
 
 .web-links {
-    padding-top: 1.5%;
-    padding-left: 3%;
-    padding-right: 3%;
+    padding-top: 1%;
+    padding-left: 6%;
+    padding-right: 6%;
 }
 
 
@@ -105,8 +112,6 @@ input {
 .concertBtn {
     background-color: #026BDE;
     width: 96%;
-    /* padding-left: 40%;
-    padding-right: 40%; */
     border-radius: 0px 0px 50px 50px;
 }
 

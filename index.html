@@ -25,13 +25,14 @@
   <body>
     <!-- landing page -->
     <header> 
+
         <div class="row">
           <!-- left margin -->
           <div class="col s1">
           </div>
           <!-- main section -->
           <div class="col s10">
-            <div class="card align center">
+            <div class="card align center" id="formContainer">
               <div class="card-content white-text">
                 <h1 class="card-title" id="titleTxt" >Fan Jam</h1>
                 <p id="aboutTxt">Welcome to Fan Jam where you can prepare for your upcoming concert by searching for the artist and song title to get the latest information.
@@ -66,8 +67,10 @@
                       <label for="icon_telephone">Song Title</label>
                     </div>
                   </div>
+
+                  
                 </form>
-                <button class="color black pulse btn-large"><a href="#resultsArea"> </a><i class="material-icons left">music_note</i>Rock on!</button>
+                <button class="color black pulse btn-large" id="rockOnBtn"><a href="#resultsArea"> </a><i class="material-icons left">music_note</i>Rock on!</button>
               </div>
             </div>
           </div>
@@ -85,12 +88,14 @@
               <div class="card left-align">
                 <!-- Band picture? -->
                 <div class="card-image ">
+                  
+                  
                   <img src="https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?cs=srgb&dl=pexels-wendy-wei-1190297.jpg&fm=jpg">
                   <span class="card-title">Card Title</span>
                 <!-- <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a> -->
                 </div>
                 <p id="artistName">Artist Name</p>
-                  <div class="card-content">
+                  <div id="artist-lyrics" class="card-content">
                     <p id="lyrics">I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
                     <!-- buttons for recent history attn:Christa -->
                     <div>
@@ -116,40 +121,37 @@
               <div class="card">
                 <div class="card-image">
                   <div class="row web-links">
-                    
                     <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large twitterBtn infoBtn fa fa-twitter"> Twitter</button>
-                  
-
                     <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large youtubeBtn infoBtn fa fa-youtube"> Youtube</button>
-
-
                     <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large facebookBtn infoBtn fa fa-facebook"> FaceBook</button>
-
-
                     <button class="col s12 m6 l6 xl3 waves-effect waves-light btn-large webpageBtn infoBtn">Webpage<i class="material-icons right">cloud</i></button>
                      </div>
-
                   <!-- <img src="https://images.pexels.com/photos/164879/pexels-photo-164879.jpeg?cs=srgb&dl=pexels-pixabay-164879.jpg&fm=jpg"> -->
                   <!-- <span class="card-title">Card Title</span> -->
                   <!-- <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a> -->
                   </div>
-                  <p id="artistName">Artist Name</p>
-
-                  <button class="waves-effect waves-light btn-large concertBtn"><i class="material-icons left">cloud</i>Concerts</button>
-                  <div class="card-content">
+<!--                   <p id="artistName">Artist Name</p> -->
+                  <div id="concertsDiv">
+<!--                   <button class="waves-effect waves-light btn-large concertBtn"><i class="material-icons left">cloud</i>Concerts</button> -->
+              </div>
+<!--                     <div class="card-content">
                     <p id="artistInfo">I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
                     <br><br>
                     <p id="artistInfo">From ticket master API</p>
                     <br><br>
                     <p id="artistInfo">info about the events</p>
                      <br><br>
-                    <p id="artistInfo">This might be a url or more info!. Who knows.</p>
+                    <p id="artistInfo">This might be a url or more info!. Who knows.</p> -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div id="searchedDiv">
+
+      </div>
     </section>
     
 
