@@ -1,15 +1,22 @@
 var artist = '';
 var title = '';
-var searchHistory = [];
+var searchSongHistory = [];
 
 $('#formContainer').on("click", '#rockOnBtn', function(event) {
     event.preventDefault();
+   
+    $('html, body').animate({
+       scrollTop: $('#resultsArea').offset().top
+      }, 800, function(){
+
+      window.location.href = '#resultsArea';
+    });
     
     // take input value 
     artist = $(".artistInput").val();
     title = $(".titleInput").val();
 
-    searchHistory.push(title);
+    searchSongHistory.push(title);
 
     // convert object to JSON string
     const jsonSongArr = JSON.stringify(searchHistory);
@@ -41,7 +48,6 @@ function generateLyrics(data){
     var lyricsContainer = $("#artist-lyrics");
     lyricsContainer.html('');
     var lyrics = data.lyrics;
-    // console.log(lyrics);
     lyrics = lyrics.replace('Paroles de la chanson', '');
     $('#artistName').text(artist.toUpperCase());
     $('#songName').text(title.toUpperCase());
@@ -52,38 +58,42 @@ function generateLyrics(data){
 
 
 function getHistory(){
-    // console.log("Starting getHistory");
-    // var searchHistoryDiv = $("#resultsArea");
-    var searchHistoryDiv = $("#searchedDiv");
-    searchHistoryDiv.html('');
-    if(localStorage.getItem("title")) { 
-        // get string from local storage
-        searchHistory = JSON.parse(localStorage.getItem("title"));
-        // console.log(searchHistory);
+  var searchArtistList = $("#searchHistoryArtist");
+  var searchSongList = $("#searchHistoryTitle");
 
-        
-        // for loop to create buttons of history of songs searches
-        for (var i = 0; i < searchHistory.length; i++) {
-            var newBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i>Concerts</button>")
-            // console.log(newBtns);
-            newBtns.text(searchHistory[i]);
-            // searchHistoryDiv.append(newBtns);//
-            searchHistoryDiv.append(newBtns)
-            newBtns.click(function(event) {
-                event.preventDefault();
-                var searchedTitle = $(event.target);
-                var prevTitle = searchedTitle.text();
-                // console.log(prevTitle);
-                lyricsApi(prevTitle);
-                attractions(prevTitle);
-            })
+  searchArtistList.html('');
+  searchSongList.html('');
+
+  if(localStorage.getItem("title") && localStorage.getItem("artist")) { 
+      // get string from local storage
+      searchSongHistory = JSON.parse(localStorage.getItem("title"));
+      searchArtistHistory = JSON.parse(localStorage.getItem("artist"));
+
+        // for loop to create items in the songs dropdown
+        for (var i = 0; i < searchSongHistory.length; i++) {
+          var optionItem = $('<option></option>');
+          optionItem.text(searchSongHistory[i]);
+
+          searchSongList.append(optionItem);
+          searchSongList.append(searchSongHistory);
+          $(this).focus();
+
+          }
+          // for loop to create items in the artist dropdown
+        for (var j = 0; j < searchArtistHistory.length; j++) {
+          var optionItem = $('<option></option>');
+          optionItem.text(searchArtistHistory[j]);
+
+          // searchArtistList.append(optionItem);
+          searchSongList.append(searchArtistHistory);
+
+          }
         }
     }
-}
 
 function matchArtist(artistArray){
   for(let i = 0; i < artistArray.length; i++){
-    if(artistArray[i].name === artist){
+    if(artistArray[i].name.toUpperCase() === artist.toUpperCase()){
       return artistArray[i];
     }
   }
@@ -103,14 +113,22 @@ function attractions() {
     .then (function(data) {
         let temp = matchArtist(data._embedded.attractions);
         console.log(temp.externalLinks);
-        $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
-        $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
-        $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
-        $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
+        if(temp.externalLinks.twitter){
+          $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
+          console.log(temp.externalLinks.twitter[0].url);
+        }
+        if(temp.externalLinks.youtube){
+          $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
+          console.log(temp.externalLinks.youtube[0].url);
+        }
+        if(temp.externalLinks.facebook){
+          $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
+        }
+        if(temp.externalLinks.homepage){
+          $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
+        }
         if(temp.upcomingEvents._total != 0){
           events();
-        }else{
-          
         }
     })
 }
