@@ -43,8 +43,8 @@ html {
 nav {
     background-image: url('images/concertyellow615h.jpg');
     background-position: center;
-    background-size: 100%;
-    height: 615px;
+    background-size: 200%;
+    height: 1230px;
     padding: 5%;
 }
 
@@ -65,6 +65,7 @@ input {
 #concerts {
     text-decoration: none;
     color: white;
+}
 
 .seperation {
     padding: 30px;
