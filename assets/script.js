@@ -2,7 +2,6 @@ var artist = '';
 var title = '';
 var searchHistory = [];
 
-
 $('#formContainer').on("click", '#rockOnBtn', function(event) {
     event.preventDefault();
     
@@ -32,27 +31,42 @@ function lyricsApi() {
         return response.json();
       })
       .then(function (data) {
-          console.log(data);
-          var lyrics = data.lyrics
-          lyrics = lyrics.replace('Paroles de la chanson', '')
-          // console.log(lyrics);
-          var lyricsContainer = $("#artist-lyrics");
-          var artistName = $("<p id='artistName'></p>").text(artist.toUpperCase());
-          var songTitle = $("<p id='lyrics'></p>").text(lyrics);
-          // console.log(lyrics);
-          lyricsContainer.append(artistName);
-          lyricsContainer.append(songTitle);
-          getHistory();
+        
+          // console.log(data);
+          // var lyrics = data.lyrics
+          // lyrics = lyrics.replace('Paroles de la chanson', '')
+          // var lyricsContainer = $("#artist-lyrics");
+          // var artistName = $("<p id='artistName'></p>").text(artist.toUpperCase());
+          // var songTitle = $("<p id='lyrics'></p>").html(lyrics.replace(new RegExp("\n", "g"), "<br>"));
+          // lyricsContainer.append(artistName);
+          // lyricsContainer.append(songTitle);
+          generateLyrics(data)
+          getHistory(data);
       });
       // console.log("Ending lyrics functions.");
   }
 
+
+function generateLyrics(data){
+    var lyricsContainer = $("#artist-lyrics");
+    lyricsContainer.html('');
+    var lyrics = data.lyrics
+    // console.log(lyrics);
+    lyrics = lyrics.replace('Paroles de la chanson', '')
+    var artistName = $("<p id='artistName'></p>").text(artist.toUpperCase());
+    var songTitle = $("<p id='lyrics'></p>").html(lyrics.replace(new RegExp("\n", "g"), "<br>"));
+    lyricsContainer.append(artistName);
+    lyricsContainer.append(songTitle);
+}
+
+
+
 function getHistory(){
     // console.log("Starting getHistory");
-    var searchHistoryDiv = $("#resultsArea");
-    // searchHistoryDiv.html("");
-
-    if(localStorage.getItem("title")) {
+    // var searchHistoryDiv = $("#resultsArea");
+    var searchHistoryDiv = $("#searchedDiv");
+    searchHistoryDiv.html('');
+    if(localStorage.getItem("title")) { 
         // get string from local storage
         searchHistory = JSON.parse(localStorage.getItem("title"));
         // console.log(searchHistory);
@@ -63,8 +77,8 @@ function getHistory(){
             var newBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i>Concerts</button>")
             // console.log(newBtns);
             newBtns.text(searchHistory[i]);
-            searchHistoryDiv.append(newBtns);
-           
+            // searchHistoryDiv.append(newBtns);//
+            searchHistoryDiv.append(newBtns)
             newBtns.click(function(event) {
                 event.preventDefault();
                 var searchedTitle = $(event.target);
