@@ -42,6 +42,7 @@ function generateLyrics(data){
     lyricsContainer.html('');
     var lyrics = data.lyrics;
     // console.log(lyrics);
+    $("section").removeClass("hidden");
     lyrics = lyrics.replace('Paroles de la chanson', '');
     $('#artistName').text(artist.toUpperCase());
     $('#songName').text(title.toUpperCase());
@@ -49,41 +50,75 @@ function generateLyrics(data){
     lyricsContainer.append(songTitle);
 }
 
-
-
 function getHistory(){
-    // console.log("Starting getHistory");
-    // var searchHistoryDiv = $("#resultsArea");
-    var searchHistoryDiv = $("#searchedDiv");
-    searchHistoryDiv.html('');
-    if(localStorage.getItem("title")) { 
+    var searchArtistList = $("#searchHistoryArtist");
+    var searchSongList = $("#searchHistoryTitle");
+  
+    searchArtistList.html('');
+    searchSongList.html('');
+  
+    // console.log(searchHistoryList);
+    if(localStorage.getItem("title") && localStorage.getItem("artist")) { 
         // get string from local storage
-        searchHistory = JSON.parse(localStorage.getItem("title"));
-        // console.log(searchHistory);
+        searchSongHistory = JSON.parse(localStorage.getItem("title"));
+        searchArtistHistory = JSON.parse(localStorage.getItem("artist"));
+  
+          // for loop to create items in the songs dropdown
+          for (var i = 0; i < searchSongHistory.length; i++) {
+            var optionItem = $('<option></option>');
+            optionItem.text(searchSongHistory[i]);
+  
+            // searchSongList.append(optionItem);
+            searchSongList.append(searchSongHistory);
+            console.log($(this));
+            $(this).focus();
+  
+            }
+            // for loop to create items in the artist dropdown
+          for (var j = 0; j < searchArtistHistory.length; j++) {
+            var optionItem = $('<option></option>');
+            optionItem.text(searchArtistHistory[j]);
+  
+            // searchArtistList.append(optionItem);
+            searchSongList.append(searchArtistHistory);
+  
+            }
+          }
+      }
+
+// function getHistory(){
+//     // console.log("Starting getHistory");
+//     // var searchHistoryDiv = $("#resultsArea");
+//     var searchHistoryDiv = $("#searchedDiv");
+//     searchHistoryDiv.html('');
+//     if(localStorage.getItem("title")) { 
+//         // get string from local storage
+//         searchHistory = JSON.parse(localStorage.getItem("title"));
+//         // console.log(searchHistory);
 
         
-        // for loop to create buttons of history of songs searches
-        for (var i = 0; i < searchHistory.length; i++) {
-            var newBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i>Concerts</button>")
-            // console.log(newBtns);
-            newBtns.text(searchHistory[i]);
-            // searchHistoryDiv.append(newBtns);//
-            searchHistoryDiv.append(newBtns)
-            newBtns.click(function(event) {
-                event.preventDefault();
-                var searchedTitle = $(event.target);
-                var prevTitle = searchedTitle.text();
-                // console.log(prevTitle);
-                lyricsApi(prevTitle);
-                attractions(prevTitle);
-            })
-        }
-    }
-}
+//         // for loop to create buttons of history of songs searches
+//         for (var i = 0; i < searchHistory.length; i++) {
+//             var newBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i>Concerts</button>")
+//             // console.log(newBtns);
+//             newBtns.text(searchHistory[i]);
+//             // searchHistoryDiv.append(newBtns);//
+//             searchHistoryDiv.append(newBtns)
+//             newBtns.click(function(event) {
+//                 event.preventDefault();
+//                 var searchedTitle = $(event.target);
+//                 var prevTitle = searchedTitle.text();
+//                 // console.log(prevTitle);
+//                 lyricsApi(prevTitle);
+//                 attractions(prevTitle);
+//             })
+//         }
+//     }
+// }
 
 function matchArtist(artistArray){
   for(let i = 0; i < artistArray.length; i++){
-    if(artistArray[i].name === artist){
+    if(artistArray[i].name.toUpperCase() === artist.toUpperCase()){
       return artistArray[i];
     }
   }
@@ -107,45 +142,60 @@ function visitPage(url) {
           $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
           $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
           $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
-          if(temp.upcomingEvents._total != 0){
+
+            //appending artist image to lyrics-side
+            console.log(data);
+        for (var i=0; i < data._embedded.attractions.length; i++){
+          if (temp.name.toUpperCase() === artist.toUpperCase())  {
+            var artistDiv = $(".artistImage");
+            artistDiv.html("");
+            var artistImg = $("<img>");
+            artistImg.attr("src", temp.images[0].url);
+            artistDiv.append(artistImg);
+             }
+        }
+
+        if(temp.upcomingEvents._total != 0){
             events();
-          }else{
-            
-          }
+        }else{
+            $("#concertsDiv").append($("<p>This artist has no upcoming events</p>"));
+        }
       })
   }
 
-function events() {
+var scrollToTopBtn = document.querySelector(".scrollToTopBtn");
+var rootElement = document.documentElement;
 
+
+  function events() {
     var eventsURL = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${artist}&apikey=2auLbJzQE7PGFSioWJ1GEiuTpEw12S1r`
     fetch(eventsURL)
     .then(function (response) {
       return response.json();
   })
   .then (function(data) {
-      var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
-      concertsDiv.html("");
-      for (var i=0; i < data._embedded.events.length; i++) {
-          if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase()) {
-              var concertBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i>Concerts</button>")
+        var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
+        concertsDiv.html("");
+      
+        for (var i=0; i < data._embedded.events.length; i++) {
+          if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase() || data._embedded.events[i].type === "event") {
+              console.log(data);
+              //appending concert links for each city
+              var concertBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i></button>")
               var concertLink = $("<a class=concertLink id='concerts'></a>");
 
               concertLink.attr("href", data._embedded.events[i].url);
-              concertLink.text(artist.toUpperCase() + " in " + data._embedded.events[i]._embedded.venues[0].city.name);
+              concertLink.text(data._embedded.events[i].name + " in " + data._embedded.events[i]._embedded.venues[0].city.name);
               concertsDiv.append(concertBtns);
               concertBtns.append(concertLink);
-               //just to test in temp div
-          }else {
-          concertsDiv.append($("<p>This artist has no upcoming events</p>"));
+             
           }
       }
       
   })
 }
-
-var scrollToTopBtn = document.querySelector(".scrollToTopBtn");
-var rootElement = document.documentElement;
-
+//   Ron added for dropdown menus for recent searches
+// $('.dropdown-trigger').dropdown();
 
 function handleScroll() {
   // Do something on scroll
