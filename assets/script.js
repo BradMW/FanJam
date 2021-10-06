@@ -2,7 +2,6 @@ var artist = '';
 var title = '';
 var searchHistory = [];
 
-
 $('#formContainer').on("click", '#rockOnBtn', function(event) {
     event.preventDefault();
     
@@ -24,7 +23,6 @@ $('#formContainer').on("click", '#rockOnBtn', function(event) {
 
 
 function lyricsApi() {
-  
   var lyricsUrl = `https://api.lyrics.ovh/v1/${artist}/${title}`;
     
     fetch(lyricsUrl)
@@ -32,43 +30,55 @@ function lyricsApi() {
         return response.json();
       })
       .then(function (data) {
-          
-          $("#artistName").text(artist.toUpperCase());
-          // // a wrapper for the song title being searched
-          $("#lyrics").text(data.lyrics);
-
-          getHistory();
+        
+          generateLyrics(data)
+          getHistory(data);
       });
-      
   }
 
-function getHistory(){
-    
-    var searchHistoryDiv = $("#historyBtns");
-    searchHistoryDiv.html("");
 
-    if(localStorage.getItem("title")) {
+function generateLyrics(data){
+    var lyricsContainer = $("#artist-lyrics");
+    lyricsContainer.html('');
+    var lyrics = data.lyrics;
+    // console.log(lyrics);
+    lyrics = lyrics.replace('Paroles de la chanson', '');
+    $('#artistName').text(artist.toUpperCase());
+    $('#songName').text(title.toUpperCase());
+    var songTitle = $("<p id='lyrics'></p>").html(lyrics.replace(new RegExp("\n", "g"), "<br>"));
+    lyricsContainer.append(songTitle);
+}
+
+
+
+function getHistory(){
+    // console.log("Starting getHistory");
+    // var searchHistoryDiv = $("#resultsArea");
+    var searchHistoryDiv = $("#searchedDiv");
+    searchHistoryDiv.html('');
+    if(localStorage.getItem("title")) { 
         // get string from local storage
         searchHistory = JSON.parse(localStorage.getItem("title"));
+        // console.log(searchHistory);
+
         
         // for loop to create buttons of history of songs searches
         for (var i = 0; i < searchHistory.length; i++) {
-            var newBtns = $("<button class='btn btn-primary' type='button'>Search</button>")
-            
+            var newBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i>Concerts</button>")
+            // console.log(newBtns);
             newBtns.text(searchHistory[i]);
-            searchHistoryDiv.append(newBtns);
-           
+            // searchHistoryDiv.append(newBtns);//
+            searchHistoryDiv.append(newBtns)
             newBtns.click(function(event) {
                 event.preventDefault();
                 var searchedTitle = $(event.target);
                 var prevTitle = searchedTitle.text();
-                console.log(prevTitle);
+                // console.log(prevTitle);
                 lyricsApi(prevTitle);
                 attractions(prevTitle);
             })
         }
     }
-    
 }
 
 function matchArtist(artistArray){
@@ -81,7 +91,7 @@ function matchArtist(artistArray){
 
 function visitPage(url) {
   console.log(url);
-  window.location = url;
+  window.open(url, '_blank');
 }
 
 function attractions() {
@@ -113,24 +123,27 @@ function attractions() {
         return response.json();
     })
     .then (function(data) {
-        let event = matchArtist(data._embedded.events);
-        let concertsDiv = $("#concertBtns"); //div
+        var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
         concertsDiv.html("");
-        
-        for(let i = 0; i < event.length; i++){
-          let concertBtns = $("<button class='btn btn-primary' type='button'></button>");
-          let concertLink = $("<a class=concertLink id='concerts'></a>");
+        for (var i=0; i < data._embedded.events.length; i++) {
+            if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase()) {
+                var concertBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i>Concerts</button>")
+                var concertLink = $("<a class=concertLink id='concerts'></a>");
 
-          concertLink.attr("href", event.url);
-          concertLink.text(artistName + " in " + event._embedded.venues[i].city.name);
-          concertsDiv.append(concertBtns);
-          concertBtns.append(concertLink);
+                concertLink.attr("href", data._embedded.events[i].url);
+                concertLink.text(artist.toUpperCase() + " in " + data._embedded.events[i]._embedded.venues[0].city.name);
+                concertsDiv.append(concertBtns);
+                concertBtns.append(concertLink);
+                 //just to test in temp div
+            }else {
+            concertsDiv.append($("<p>This artist has no upcoming events</p>"));
+            }
         }
         
     })
   }
-  
-
+//   Ron added for dropdown menus for recent searches
+$('.dropdown-trigger').dropdown();
 
 
 // function for "search new artist" button at the bottom of both columns that scrolls user back to the top of the page
