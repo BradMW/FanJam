@@ -142,6 +142,7 @@ function visitPage(url) {
           $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
           $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
           $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
+
             //appending artist image to lyrics-side
             console.log(data);
         for (var i=0; i < data._embedded.attractions.length; i++){
@@ -161,6 +162,9 @@ function visitPage(url) {
         }
       })
   }
+
+var scrollToTopBtn = document.querySelector(".scrollToTopBtn");
+var rootElement = document.documentElement;
 
 
   function events() {
@@ -193,7 +197,49 @@ function visitPage(url) {
 //   Ron added for dropdown menus for recent searches
 // $('.dropdown-trigger').dropdown();
 
+function handleScroll() {
+  // Do something on scroll
+  var scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+  if (rootElement.scrollTop / scrollTotal > 0.8) {
+    // Show button
+    scrollToTopBtn.classList.add("showBtn");
+  } else {
+    // Hide button
+    scrollToTopBtn.classList.remove("showBtn");
+  }
+}
 
+function scrollToTop() {
+  // Scroll to top logic
+  rootElement.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+scrollToTopBtn.addEventListener("click", scrollToTop);
+document.addEventListener("scroll", handleScroll);
+
+// $(function() {
+//     var header = $("header");
+//     var backgrounds = new Array(
+//     "url(assets/images/concert2.jpg)",
+//     "url(assets/images/concert3.jpg)",
+//     "url(assets/images/concerthands.jpg)",
+//     "url(assets/images/concertyellow615h.jpg)"
+//     );
+//     var current = 0;
+    
+//     function nextBackground() {
+//     header.css(
+//     "background",
+//     backgrounds[current = ++current % backgrounds.length]
+//     );
+    
+//     setTimeout(nextBackground, 10000);
+//     }
+//     setTimeout(nextBackground, 10000);
+//     body.css("background", backgrounds[0]);
+//     });
 // function for "search new artist" button at the bottom of both columns that scrolls user back to the top of the page
 // clear html inner.HTML("")
 // append buttons to the bottom of the lyrics with title of the song. Create an array in local storage to do this
