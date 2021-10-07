@@ -147,6 +147,8 @@ function attractions() {
         if(temp.externalLinks.twitter){
           $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
           console.log(temp.externalLinks.twitter[0].url);
+        } else {
+          $('.twitterBtn').addClass("hidden");
         }
         if(temp.externalLinks.youtube){
           $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
@@ -177,7 +179,7 @@ var rootElement = document.documentElement;
           if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase() || data._embedded.events[i].type === "event") {
               console.log(data);
               //appending concert links for each city
-              var concertBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i></button>")
+              var concertBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>music_note</i></button>")
               var concertLink = $("<a class='concertLink' id='concerts' target='_blank'></a>");
 
               concertLink.attr("href", data._embedded.events[i].url);
