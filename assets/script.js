@@ -92,7 +92,6 @@ function getHistory(){
           artistInput.append(dataListEl);
           }
 
-
         //for loop to create items in the songs dropdown
         for (var i = 0; i < searchSongHistory.length; i++) {
           var optionItem = $('<option></option>');
@@ -113,36 +112,6 @@ function matchArtist(artistArray){
   }
 }
 
-function visitPage(url) {
-    console.log(url);
-    window.open(url, '_blank');
-  }
-  
-  function attractions() {
-    var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
-    fetch(attractionsURL)
-      .then(function (response) {
-          return response.json();
-      })
-      .then (function(data) {
-          let temp = matchArtist(data._embedded.attractions);
-          console.log(temp.externalLinks);
-          $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
-          $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
-          $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
-          $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
-
-            //appending artist image to lyrics-side
-            console.log(data);
-        for (var i=0; i < data._embedded.attractions.length; i++){
-          if (temp.name.toUpperCase() === artist.toUpperCase())  {
-            var artistDiv = $(".artistImage");
-            artistDiv.html("");
-            var artistImg = $("<img>");
-            artistImg.attr("src", temp.images[0].url);
-            artistDiv.append(artistImg);
-             }
-        }
 
 function attractions() {
   var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
@@ -153,6 +122,16 @@ function attractions() {
     .then (function (data) {
         let temp = matchArtist(data._embedded.attractions);
         console.log(temp.externalLinks);
+        console.log(temp);
+        if (temp.name.toUpperCase() === artist.toUpperCase())  {
+            var artistDiv = $(".artistImage");
+            var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
+            var artistImg = $("<img>");
+            artistDiv.html("");
+            concertsDiv.html("");
+            artistImg.attr("src", temp.images[0].url);
+            artistDiv.append(artistImg);
+            }
         if(temp.externalLinks.twitter){
           $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
           console.log(temp.externalLinks.twitter[0].url);
@@ -187,8 +166,6 @@ var rootElement = document.documentElement;
   })
   .then (function(data) {
         var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
-        concertsDiv.html("");
-      
         for (var i=0; i < data._embedded.events.length; i++) {
           if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase() || data._embedded.events[i].type === "event") {
               console.log(data);
