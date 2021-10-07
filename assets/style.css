@@ -122,6 +122,11 @@ input {
    
 }
 
+.disableBtn {
+    background-color: gray;
+    
+}
+
 .web-links {
     padding-top: 1%;
     padding-left: 6%;
