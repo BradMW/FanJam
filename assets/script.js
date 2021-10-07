@@ -124,14 +124,26 @@ function attractions() {
         console.log(temp.externalLinks);
         console.log(temp);
         if (temp.name.toUpperCase() === artist.toUpperCase())  {
-            var artistDiv = $(".artistImage");
-            var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
-            var artistImg = $("<img>");
-            artistDiv.html("");
-            concertsDiv.html("");
-            artistImg.attr("src", temp.images[0].url);
-            artistDiv.append(artistImg);
-            }
+          var artistDiv = $(".artistImage");
+          var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
+          var artistImg = $("<img>");
+          artistDiv.html("");
+          concertsDiv.html("");
+
+          var goodImg = temp.images.filter(obj => {
+            return obj.width > 1000
+          })
+          console.log(goodImg);
+          artistImg.attr("src", goodImg[0].url);
+          artistDiv.append(artistImg);
+        }
+
+        if(temp.upcomingEvents._total != 0){
+          events();
+        }else{
+            $("#concertsDiv").append($("<p>This artist has no upcoming events</p>"));
+        }
+
         if(temp.externalLinks.twitter){
           $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
           console.log(temp.externalLinks.twitter[0].url);
@@ -146,12 +158,6 @@ function attractions() {
         if(temp.externalLinks.homepage){
           $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
         }
-        if(temp.upcomingEvents._total != 0){
-          events();
-
-        }else{
-            $("#concertsDiv").append($("<p>This artist has no upcoming events</p>"));
-        }
       })
   }
 
@@ -165,6 +171,7 @@ var rootElement = document.documentElement;
       return response.json();
   })
   .then (function(data) {
+    console.log("DATA" + data)
         var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
         for (var i=0; i < data._embedded.events.length; i++) {
           if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase() || data._embedded.events[i].type === "event") {
