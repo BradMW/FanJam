@@ -5,14 +5,9 @@ var searchArtistHistory = [];
 
 $('#formContainer').on("click", '#rockOnBtn', function(event) {
     event.preventDefault();
-   
-    $('html, body').animate({
-       scrollTop: $('#resultsArea').offset().top
-      }, 800, function(){
 
-      window.location.href = '#resultsArea';
-    });
-    
+    $("section").addClass("hidden");
+
     // take input value 
     artist = $(".artistInput").val();
     title = $(".titleInput").val();
@@ -30,7 +25,6 @@ $('#formContainer').on("click", '#rockOnBtn', function(event) {
     localStorage.setItem("artist", jsonArtistArr);
 
     lyricsApi();
-    attractions();
 
    $(".artistInput").val('');
    $(".titleInput").val('');
@@ -43,12 +37,26 @@ function lyricsApi() {
     
     fetch(lyricsUrl)
       .then(function (response) {
-        return response.json();
+        console.log(response.status)
+        if(response.status !== 404){
+          return response.json();
+        }else{
+          return false;
+        }
       })
       .then(function (data) {
-        
-          generateLyrics(data)
-          getHistory();
+          if(data){
+            console.log("continue running");
+            generateLyrics(data);
+            attractions();
+            getHistory();
+          }
+                
+          $('html, body').animate({
+            scrollTop: $('#resultsArea').offset().top
+          }, 800, function(){
+              window.location.href = '#resultsArea';
+          });
       });
   }
 
@@ -60,7 +68,6 @@ function generateLyrics(data){
     $("section").removeClass("hidden");
 
     lyrics = lyrics.replace('Paroles de la chanson', '');
-    $('#artistName').text(artist.toUpperCase());
     $('#songName').text(title.toUpperCase());
     var songTitle = $("<p id='lyrics'></p>").html(lyrics.replace(new RegExp("\n", "g"), "<br>"));
     lyricsContainer.append(songTitle);
@@ -112,7 +119,10 @@ function matchArtist(artistArray){
   }
 }
 
-
+function visitPage(url) {
+    window.open(url, '_blank');
+  }
+  
 function attractions() {
   var attractionsURL = `https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=${artist}&apikey=2AXpKaz2osoCIVl9Uly7i4JgRllUmxfL`;
   fetch(attractionsURL)
@@ -121,44 +131,50 @@ function attractions() {
     })
     .then (function (data) {
         let temp = matchArtist(data._embedded.attractions);
-        console.log(temp.externalLinks);
-        console.log(temp);
-        if (temp.name.toUpperCase() === artist.toUpperCase())  {
-          var artistDiv = $(".artistImage");
-          var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
-          var artistImg = $("<img>");
-          artistDiv.html("");
-          concertsDiv.html("");
+        
+        var artistDiv = $(".artistImage");
+        var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
+        var artistImg = $("<img>");
+        artistDiv.html("");
+        concertsDiv.html("");
 
-          var goodImg = temp.images.filter(obj => {
-            return obj.width > 1000
-          })
-          console.log(goodImg);
-          artistImg.attr("src", goodImg[0].url);
-          artistDiv.append(artistImg);
-        }
+        var goodImg = temp.images.filter(obj => {
+          return obj.width > 1000
+        })
+        artistImg.attr("src", goodImg[0].url);
+        artistDiv.append(artistImg);
+        artistDiv.append($('<span class="card-title" id="artistName"></span>'));
+        $('#artistName').text(artist.toUpperCase());
 
         if(temp.upcomingEvents._total != 0){
           events();
         }else{
-            $("#concertsDiv").append($("<p>This artist has no upcoming events</p>"));
+          concertsDiv.append($("<p>This artist has no upcoming events</p>"));
         }
 
         if(temp.externalLinks.twitter){
           $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
-          console.log(temp.externalLinks.twitter[0].url);
+          $('.twitterBtn').removeClass('');
         } else {
           $('.twitterBtn').addClass("hidden");
         }
         if(temp.externalLinks.youtube){
           $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
-          console.log(temp.externalLinks.youtube[0].url);
+          $('.youtubeBtn').removeClass('');
+        } else {
+          $('.youtubeBtn').addClass("hidden");
         }
         if(temp.externalLinks.facebook){
           $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
+          $('.facebookBtn').removeClass('');
+        } else {
+          $('.facebookBtn').addClass("hidden");
         }
         if(temp.externalLinks.homepage){
           $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
+          $('.webpageBtn').removeClass('');
+        } else {
+          $('.webpageBtn').addClass("hidden");
         }
       })
   }
