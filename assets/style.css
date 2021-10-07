@@ -9,6 +9,10 @@ html {
     scroll-behavior: smooth;
 }
 
+.input-field>label {
+    color: white
+}
+
 .results-col {
     margin: auto;
     padding: 2%;
@@ -51,6 +55,7 @@ html {
     text-align: start;
     margin: 5px;
     padding-left: 2%;
+    z-index: 1;
 }
 
 header {
@@ -110,9 +115,16 @@ input {
 }
 
 .infoBtn {
-   margin: auto;
+   margin-top: 2%;
+   margin-bottom: 2%;
    border-radius: 10px;
    min-width: 20px;
+   
+}
+
+.disableBtn {
+    background-color: gray;
+    
 }
 
 .web-links {
@@ -147,6 +159,7 @@ input {
     background-color: #026BDE;
     width: 96%;
     border-radius: 100px 100px 100px 100px;
+    margin-top: 10px;
 }
 
 .concertBtn:hover {
