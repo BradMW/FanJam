@@ -22,26 +22,13 @@ html {
     font-family: 'Corben', cursive;
     font-size: 5em;
     line-height: 1em;
-    background-color: #f3ec78;
-    background-image: linear-gradient(45deg, #bd4cf1, #2dd441);
-    background-size: 100%;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent; 
-    -moz-text-fill-color: transparent;
 }
 
 #aboutTxt{
     margin-top: 20px;
     font-family: 'Merriweather Sans', sans-serif;
     font-size: 1em;
-    background-color: #f3ec78;
-    background-image: linear-gradient(45deg, #bd4cf1, #2dd441);
-    background-size: 100%;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent; 
-    -moz-text-fill-color: transparent;
+    
 }
 #artistInfo {
     font-family: 'Libre Franklin', sans-serif;
@@ -179,11 +166,11 @@ input {
 
 .scrollToTopBtn {
     background-color: transparent;
-    border: none;
+    border: solid 1px white;
     color: white;
     cursor: pointer;
-    font-size: 18px;
-    line-height: 48px;
+    font-size: 15px;
+    line-height: 20px;
     width: 48px;
     /* place it at the bottom right corner */
     position: fixed;

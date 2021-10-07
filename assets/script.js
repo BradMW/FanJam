@@ -5,14 +5,9 @@ var searchArtistHistory = [];
 
 $('#formContainer').on("click", '#rockOnBtn', function(event) {
     event.preventDefault();
-   
-    $('html, body').animate({
-       scrollTop: $('#resultsArea').offset().top
-      }, 800, function(){
 
-      window.location.href = '#resultsArea';
-    });
-    
+    $("section").addClass("hidden");
+
     // take input value 
     artist = $(".artistInput").val();
     title = $(".titleInput").val();
@@ -30,7 +25,6 @@ $('#formContainer').on("click", '#rockOnBtn', function(event) {
     localStorage.setItem("artist", jsonArtistArr);
 
     lyricsApi();
-    attractions();
 
    $(".artistInput").val('');
    $(".titleInput").val('');
@@ -43,12 +37,26 @@ function lyricsApi() {
     
     fetch(lyricsUrl)
       .then(function (response) {
-        return response.json();
+        console.log(response.status)
+        if(response.status !== 404){
+          return response.json();
+        }else{
+          return false;
+        }
       })
       .then(function (data) {
-        
-          generateLyrics(data)
-          getHistory();
+          if(data){
+            console.log("continue running");
+            generateLyrics(data);
+            attractions();
+            getHistory();
+          }
+                
+          $('html, body').animate({
+            scrollTop: $('#resultsArea').offset().top
+          }, 800, function(){
+              window.location.href = '#resultsArea';
+          });
       });
   }
 
@@ -60,7 +68,6 @@ function generateLyrics(data){
     $("section").removeClass("hidden");
 
     lyrics = lyrics.replace('Paroles de la chanson', '');
-    $('#artistName').text(artist.toUpperCase());
     $('#songName').text(title.toUpperCase());
     var songTitle = $("<p id='lyrics'></p>").html(lyrics.replace(new RegExp("\n", "g"), "<br>"));
     lyricsContainer.append(songTitle);
@@ -92,7 +99,6 @@ function getHistory(){
           artistInput.append(dataListEl);
           }
 
-
         //for loop to create items in the songs dropdown
         for (var i = 0; i < searchSongHistory.length; i++) {
           var optionItem = $('<option></option>');
@@ -114,7 +120,6 @@ function matchArtist(artistArray){
 }
 
 function visitPage(url) {
-    console.log(url);
     window.open(url, '_blank');
   }
   
@@ -127,32 +132,49 @@ function attractions() {
     .then (function (data) {
         let temp = matchArtist(data._embedded.attractions);
         
-        if (temp.name.toUpperCase() === artist.toUpperCase())  {
-          var artistDiv = $(".artistImage");
-          artistDiv.html("");
-          var artistImg = $("<img>");
-          artistImg.attr("src", temp.images[0].url);
-          artistDiv.append(artistImg);
+        var artistDiv = $(".artistImage");
+        var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
+        var artistImg = $("<img>");
+        artistDiv.html("");
+        concertsDiv.html("");
+
+        var goodImg = temp.images.filter(obj => {
+          return obj.width > 1000
+        })
+        artistImg.attr("src", goodImg[0].url);
+        artistDiv.append(artistImg);
+        artistDiv.append($('<span class="card-title" id="artistName"></span>'));
+        $('#artistName').text(artist.toUpperCase());
+
+        if(temp.upcomingEvents._total != 0){
+          events();
+        }else{
+          concertsDiv.append($("<p>This artist has no upcoming events</p>"));
         }
+
         if(temp.externalLinks.twitter){
           $('.twitterBtn').attr('onclick', "visitPage('"+temp.externalLinks.twitter[0].url+"');");
-          console.log(temp.externalLinks.twitter[0].url);
+          $('.twitterBtn').removeClass('');
+        } else {
+          $('.twitterBtn').addClass("hidden");
         }
         if(temp.externalLinks.youtube){
           $('.youtubeBtn').attr('onclick', "visitPage('"+temp.externalLinks.youtube[0].url+"');");
-          console.log(temp.externalLinks.youtube[0].url);
+          $('.youtubeBtn').removeClass('');
+        } else {
+          $('.youtubeBtn').addClass("hidden");
         }
         if(temp.externalLinks.facebook){
           $('.facebookBtn').attr('onclick', "visitPage('"+temp.externalLinks.facebook[0].url+"');");
+          $('.facebookBtn').removeClass('');
+        } else {
+          $('.facebookBtn').addClass("hidden");
         }
         if(temp.externalLinks.homepage){
           $('.webpageBtn').attr('onclick', "visitPage('"+temp.externalLinks.homepage[0].url+"');");
-        }
-        if(temp.upcomingEvents._total != 0){
-          events();
-
-        }else{
-            $("#concertsDiv").append($("<p>This artist has no upcoming events</p>"));
+          $('.webpageBtn').removeClass('');
+        } else {
+          $('.webpageBtn').addClass("hidden");
         }
       })
   }
@@ -167,15 +189,14 @@ var rootElement = document.documentElement;
       return response.json();
   })
   .then (function(data) {
+    console.log("DATA" + data)
         var concertsDiv = $("#concertsDiv"); //div to hold concert buttons
-        concertsDiv.html("");
-      
         for (var i=0; i < data._embedded.events.length; i++) {
           if (data._embedded.events[i].name.toUpperCase() === artist.toUpperCase() || data._embedded.events[i].type === "event") {
               console.log(data);
               //appending concert links for each city
-              var concertBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i></button>")
-              var concertLink = $("<a class=concertLink id='concerts'></a>");
+              var concertBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>music_note</i></button>")
+              var concertLink = $("<a class='concertLink' id='concerts' target='_blank'></a>");
 
               concertLink.attr("href", data._embedded.events[i].url);
               concertLink.text(data._embedded.events[i].name + " in " + data._embedded.events[i]._embedded.venues[0].city.name);
