@@ -178,7 +178,7 @@ var rootElement = document.documentElement;
               console.log(data);
               //appending concert links for each city
               var concertBtns = $("<button class='waves-effect waves-light btn-large concertBtn'><i class='material-icons left'>cloud</i></button>")
-              var concertLink = $("<a class=concertLink id='concerts'></a>");
+              var concertLink = $("<a class='concertLink' id='concerts' target='_blank'></a>");
 
               concertLink.attr("href", data._embedded.events[i].url);
               concertLink.text(data._embedded.events[i].name + " in " + data._embedded.events[i]._embedded.venues[0].city.name);
