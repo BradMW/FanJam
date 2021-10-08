@@ -24,7 +24,7 @@ As a fan of an artist, our application allows the user to search the lyrics of a
 - Materialize: https://materializecss.com/
 
 ## Contributors
-- Bradely O'Dell: https://github.com/BradMW
+- Bradley O'Dell: https://github.com/BradMW
 - Christa Baccas: https://github.com/christa-baccas
 - Phillip Welch: https://github.com/PAW6063
 - Ronald Sit: https://github.com/sitmeister
